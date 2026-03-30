@@ -1,0 +1,18 @@
+packages:
+  "framer-motion": "For page transitions, scroll animations, and editorial visual polish"
+  "react-helmet-async": "For managing SEO metadata, title tags, and injecting JSON-LD in the head"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility for merging tailwind classes without style conflicts"
+
+images:
+  - path: "artifacts/goukraina-website/public/images/hero-bg.png"
+    description: "Subtle, premium dark blue gradient mesh with a very soft abstract glowing gold light in the corner. Editorial, authoritative style, clean and minimal."
+    aspect_ratio: "16:9"
+  - path: "artifacts/goukraina-website/public/images/water-texture.png"
+    description: "Abstract rippling water texture in deep blue. Very subtle, elegant, used as a section background."
+    aspect_ratio: "16:9"
+
+notes:
+  - Using React Helmet Async to handle SEO metadata as this is a React SPA (not Next.js)
+  - Blog data is hardcoded in a local library as requested since there is no backend API defined for it.
+  - Used wouter for routing as it is part of the standard stack.
