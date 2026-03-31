@@ -9,8 +9,12 @@ export default function Footer() {
           
           {/* Col 1 */}
           <div>
-            <Link href="/" className="font-display text-2xl font-bold tracking-tight text-white mb-6 block">
-              Go Ukraina
+            <Link href="/" className="inline-block mb-6">
+              <img
+                src="/images/logo.png"
+                alt="Go Ukraina"
+                className="h-9 w-auto brightness-0 invert"
+              />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               A Los Angeles-based 501(c)(3) nonprofit delivering essential aid and rebuilding infrastructure in war-affected Ukraine.

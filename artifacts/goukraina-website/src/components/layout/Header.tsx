@@ -26,7 +26,7 @@ export default function Header() {
   const isHome = location === "/";
   const headerBgClass = isScrolled || !isHome ? "bg-white shadow-sm" : "bg-transparent";
   const textColorClass = isScrolled || !isHome ? "text-foreground" : "text-white";
-  const logoColorClass = isScrolled || !isHome ? "text-primary" : "text-white";
+  const logoInvert = isScrolled || !isHome ? false : true;
 
   return (
     <header className={cn("fixed top-0 w-full z-50 transition-all duration-300", headerBgClass)}>
@@ -34,10 +34,12 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <span className={cn("font-display text-2xl font-bold tracking-tight transition-colors", logoColorClass)}>
-              Go Ukraina
-            </span>
+          <Link href="/" className="flex items-center group">
+            <img
+              src="/images/logo.png"
+              alt="Go Ukraina"
+              className={cn("h-10 w-auto transition-all duration-300", logoInvert && "brightness-0 invert")}
+            />
           </Link>
 
           {/* Desktop Nav */}
