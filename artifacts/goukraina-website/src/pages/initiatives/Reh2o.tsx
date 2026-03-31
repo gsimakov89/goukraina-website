@@ -1,6 +1,5 @@
 import PageMeta from "@/components/seo/PageMeta";
 import { ArticleSchema } from "@/components/seo/SchemaOrg";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Droplets, Sun, Activity, ShieldCheck } from "lucide-react";
@@ -89,8 +88,16 @@ export default function Reh2o() {
       <section className="py-24 bg-foreground text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1 rounded-2xl overflow-hidden">
-              <PlaceholderImage text="Borodianka Water Project Installation" className="w-full aspect-[4/3] bg-white/5" />
+            <div className="order-2 lg:order-1 rounded-2xl overflow-hidden shadow-2xl">
+              <video
+                src="/videos/reh2o-project.mp4"
+                controls
+                playsInline
+                className="w-full aspect-video object-cover"
+                poster=""
+              >
+                Your browser does not support HTML5 video.
+              </video>
             </div>
             <div className="order-1 lg:order-2">
               <div className="text-accent font-bold tracking-widest uppercase text-sm mb-4">Pilot Project</div>
@@ -110,6 +117,48 @@ export default function Reh2o() {
                   <div className="text-3xl font-display font-bold text-accent mb-1">100%</div>
                   <div className="text-sm text-gray-400">Off-Grid Capable</div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Showcase */}
+      <section className="py-24 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-4xl font-bold mb-4">See ReH2O In Action</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Watch how our solar-powered purification units are designed and deployed to bring clean water to Ukraine's most vulnerable communities.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="rounded-2xl overflow-hidden shadow-lg bg-foreground">
+              <video
+                src="/videos/reh2o-project.mp4"
+                controls
+                playsInline
+                className="w-full aspect-video"
+              >
+                Your browser does not support HTML5 video.
+              </video>
+              <div className="p-5">
+                <h3 className="font-display text-xl font-bold text-white mb-1">ReH2O Field Deployment</h3>
+                <p className="text-sm text-gray-400">Documentation of the Borodianka installation and its impact on the community.</p>
+              </div>
+            </div>
+            <div className="rounded-2xl overflow-hidden shadow-lg bg-foreground">
+              <video
+                src="/videos/reh2o-3d.mp4"
+                controls
+                playsInline
+                className="w-full aspect-video"
+              >
+                Your browser does not support HTML5 video.
+              </video>
+              <div className="p-5">
+                <h3 className="font-display text-xl font-bold text-white mb-1">ReH2O Station — 3D Overview</h3>
+                <p className="text-sm text-gray-400">A detailed look at the engineering and components behind each solar-powered purification unit.</p>
               </div>
             </div>
           </div>
