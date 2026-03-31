@@ -7,7 +7,7 @@ const router = Router();
 
 const WEBSITE_PUBLIC = path.resolve(
   __dirname,
-  "../../../goukraina-website/public"
+  "../../goukraina-website/public"
 );
 
 function connectors() {

@@ -71,6 +71,7 @@ export default function Home() {
             muted
             loop
             playsInline
+            preload="auto"
             className="w-full h-full object-cover opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0D1B2A] via-[#0D1B2A]/80 to-[#0D1B2A]/40" />
