@@ -64,14 +64,16 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center bg-[#0D1B2A] overflow-hidden pt-20">
-        <div className="absolute inset-0 z-0 opacity-60">
-          {/* landing page hero scenic ukraine landscape abstract dark */}
-          <img 
-            src="https://pixabay.com/get/g8232addca8b42c4360d1aff407a54f73557403957983166b876c0625ab074ee63ca126653776b719fa493a1387976195a3f137fd64318dc3dbc45e5a1f909f36_1280.jpg" 
-            alt="Ukraine abstract landscape" 
-            className="w-full h-full object-cover"
+        <div className="absolute inset-0 z-0">
+          <video
+            src="/videos/URS_2025.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-50"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0D1B2A] via-[#0D1B2A]/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0D1B2A] via-[#0D1B2A]/80 to-[#0D1B2A]/40" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20">
