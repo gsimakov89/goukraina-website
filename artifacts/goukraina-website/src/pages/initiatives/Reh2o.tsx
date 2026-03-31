@@ -1,18 +1,82 @@
+import { useState } from "react";
 import PageMeta from "@/components/seo/PageMeta";
 import { ArticleSchema } from "@/components/seo/SchemaOrg";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Droplets, Sun, Activity, ShieldCheck } from "lucide-react";
+import { Droplets, Sun, Activity, ShieldCheck, X, ChevronLeft, ChevronRight } from "lucide-react";
+
+const galleryImages = [
+  { src: "/images/reh2o/delivery-1.jpg", alt: "ReH2O station delivery — team inspecting the unit on arrival" },
+  { src: "/images/reh2o/delivery-2.jpg", alt: "Go Ukraina team presenting the ReH2O station before deployment" },
+  { src: "/images/reh2o/station-interior.jpeg", alt: "Inside the ReH2O reverse osmosis purification system" },
+  { src: "/images/reh2o/crane-station.jpg", alt: "ReH2O station being positioned by crane during installation" },
+  { src: "/images/reh2o/truck-1.jpg", alt: "ReH2O unit transported on truck to deployment site" },
+  { src: "/images/reh2o/truck-2.jpg", alt: "Go Ukraina branded ReH2O station truck en route to community" },
+  { src: "/images/reh2o/inside-station.jpg", alt: "Engineers reviewing system data inside the ReH2O station" },
+  { src: "/images/reh2o/team-station.jpg", alt: "Go Ukraina team and community partners at the ReH2O station" },
+  { src: "/images/reh2o/meeting-1.jpeg", alt: "Partnership meeting with regional reconstruction authority" },
+  { src: "/images/reh2o/meeting-2.jpeg", alt: "Go Ukraina co-chairman at regional cooperation summit" },
+];
+
+function Lightbox({ images, index, onClose, onPrev, onNext }: {
+  images: typeof galleryImages;
+  index: number;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+      onClick={onClose}
+    >
+      <button
+        onClick={(e) => { e.stopPropagation(); onPrev(); }}
+        className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+      <img
+        src={images[index].src}
+        alt={images[index].alt}
+        className="max-h-[85vh] max-w-[90vw] object-contain rounded-xl shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      />
+      <button
+        onClick={(e) => { e.stopPropagation(); onNext(); }}
+        className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors"
+      >
+        <X className="w-5 h-5" />
+      </button>
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-sm">
+        {index + 1} / {images.length}
+      </div>
+    </div>
+  );
+}
 
 export default function Reh2o() {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const openLightbox = (i: number) => setLightboxIndex(i);
+  const closeLightbox = () => setLightboxIndex(null);
+  const prevImage = () => setLightboxIndex(i => (i! - 1 + galleryImages.length) % galleryImages.length);
+  const nextImage = () => setLightboxIndex(i => (i! + 1) % galleryImages.length);
+
   return (
     <div className="w-full pt-20">
-      <PageMeta 
-        title="ReH2O Clean Water Project" 
-        description="Providing solar-powered reverse osmosis water purification stations to war-damaged communities in Ukraine. Help us fund the next station." 
+      <PageMeta
+        title="ReH2O Clean Water Project"
+        description="Providing solar-powered reverse osmosis water purification stations to war-damaged communities in Ukraine. Help us fund the next station."
         type="article"
       />
-      <ArticleSchema 
+      <ArticleSchema
         title="ReH2O: Solar-Powered Clean Water for War-Damaged Ukraine"
         description="Deploying 150 solar-powered water purification stations across Ukraine."
         authorName="German Simakovski"
@@ -23,7 +87,6 @@ export default function Reh2o() {
       {/* Hero */}
       <section className="bg-primary text-white py-24 lg:py-32 relative overflow-hidden">
         <div className="absolute inset-0 opacity-20 mix-blend-overlay">
-           {/* clean water splashing abstract texture */}
           <img src="https://images.unsplash.com/photo-1548883354-7622d03aca27?w=1920&h=1080&fit=crop" alt="Water texture" className="w-full h-full object-cover" />
         </div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -42,12 +105,12 @@ export default function Reh2o() {
       {/* The Crisis & Solution */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
               <h2 className="font-display text-4xl font-bold mb-6 text-foreground">The Crisis</h2>
               <div className="prose prose-lg text-muted-foreground">
                 <p>
-                  Since the full-scale invasion, attacks on civilian infrastructure have decimated municipal water systems across Ukraine. The <strong>Ukraine water crisis</strong> is immense; millions lack reliable access to safe drinking water. 
+                  Since the full-scale invasion, attacks on civilian infrastructure have decimated municipal water systems across Ukraine. The <strong>Ukraine water crisis</strong> is immense; millions lack reliable access to safe drinking water.
                 </p>
                 <p>
                   Without power, pumping stations fail. Without treatment facilities, disease spreads. Bottled water delivery is expensive, logistically complex, and unsustainable for long-term survival in conflict zones.
@@ -84,56 +147,17 @@ export default function Reh2o() {
         </div>
       </section>
 
-      {/* Borodianka Case Study */}
+      {/* Videos */}
       <section className="py-24 bg-foreground text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1 rounded-2xl overflow-hidden shadow-2xl">
-              <video
-                src="/videos/reh2o-project.mp4"
-                controls
-                playsInline
-                className="w-full aspect-video object-cover"
-                poster=""
-              >
-                Your browser does not support HTML5 video.
-              </video>
-            </div>
-            <div className="order-1 lg:order-2">
-              <div className="text-accent font-bold tracking-widest uppercase text-sm mb-4">Pilot Project</div>
-              <h2 className="font-display text-4xl font-bold mb-6">Borodianka Hromada</h2>
-              <p className="text-lg text-gray-400 mb-6">
-                In partnership with the State Agency of Reconstruction and the WASH Cluster, we deployed our first <strong>solar water purification station in Ukraine</strong> to the Borodianka Hromada in the Kyiv region.
-              </p>
-              <p className="text-lg text-gray-400 mb-8">
-                This area suffered catastrophic infrastructure damage. Today, the ReH2O unit serves as a resilient hub, providing thousands of liters of purified water daily to residents recovering from occupation.
-              </p>
-              <div className="flex gap-8 border-t border-white/10 pt-8">
-                <div>
-                  <div className="text-3xl font-display font-bold text-accent mb-1">10k+</div>
-                  <div className="text-sm text-gray-400">Liters/Day Capacity</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-display font-bold text-accent mb-1">100%</div>
-                  <div className="text-sm text-gray-400">Off-Grid Capable</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Video Showcase */}
-      <section className="py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-display text-4xl font-bold mb-4">See ReH2O In Action</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Watch how our solar-powered purification units are designed and deployed to bring clean water to Ukraine's most vulnerable communities.
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              Watch how our solar-powered purification units are engineered and deployed to bring clean water to Ukraine's most vulnerable communities.
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="rounded-2xl overflow-hidden shadow-lg bg-foreground">
+            <div className="rounded-2xl overflow-hidden shadow-lg bg-white/5">
               <video
                 src="/videos/reh2o-project.mp4"
                 controls
@@ -144,10 +168,10 @@ export default function Reh2o() {
               </video>
               <div className="p-5">
                 <h3 className="font-display text-xl font-bold text-white mb-1">ReH2O Field Deployment</h3>
-                <p className="text-sm text-gray-400">Documentation of the Borodianka installation and its impact on the community.</p>
+                <p className="text-sm text-gray-400">Documentation of station delivery and its impact on the communities we serve.</p>
               </div>
             </div>
-            <div className="rounded-2xl overflow-hidden shadow-lg bg-foreground">
+            <div className="rounded-2xl overflow-hidden shadow-lg bg-white/5">
               <video
                 src="/videos/reh2o-3d.mp4"
                 controls
@@ -165,14 +189,51 @@ export default function Reh2o() {
         </div>
       </section>
 
+      {/* Photo Gallery */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-4xl font-bold mb-4">Station Delivery Gallery</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              From factory to field — photos documenting the manufacturing, transport, and deployment of our ReH2O purification stations.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {galleryImages.map((img, i) => (
+              <button
+                key={img.src}
+                onClick={() => openLightbox(i)}
+                className="group relative overflow-hidden rounded-xl aspect-square bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={galleryImages}
+          index={lightboxIndex}
+          onClose={closeLightbox}
+          onPrev={prevImage}
+          onNext={nextImage}
+        />
+      )}
+
       {/* Scale Plan & CTA */}
-      <section className="py-24 lg:py-32">
+      <section className="py-24 lg:py-32 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-display text-4xl lg:text-5xl font-bold mb-6">The 150 Station Plan</h2>
           <p className="text-xl text-muted-foreground mb-12">
-            The Borodianka water project proves the model. Now, we must scale. Go Ukraina aims to deploy 150 ReH2O stations across the most vulnerable regions of Ukraine over the next 24 months. We cannot do this without your support.
+            The ReH2O model is proven. Now, we must scale. Go Ukraina aims to deploy 150 ReH2O stations across the most vulnerable regions of Ukraine over the next 24 months. We cannot do this without your support.
           </p>
-          
           <div className="bg-primary/5 rounded-3xl p-8 md:p-12 border border-primary/20">
             <h3 className="font-display text-3xl font-bold mb-4">$15,000 Funds One Complete Station</h3>
             <p className="text-lg text-muted-foreground mb-8">
