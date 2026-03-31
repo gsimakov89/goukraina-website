@@ -235,9 +235,9 @@ export default function Reh2o() {
             The ReH2O model is proven. Now, we must scale. Go Ukraina aims to deploy 150 ReH2O stations across the most vulnerable regions of Ukraine over the next 24 months. We cannot do this without your support.
           </p>
           <div className="bg-primary/5 rounded-3xl p-8 md:p-12 border border-primary/20">
-            <h3 className="font-display text-3xl font-bold mb-4">$15,000 Funds One Complete Station</h3>
+            <h3 className="font-display text-3xl font-bold mb-4">$80,000 Funds One Complete Station</h3>
             <p className="text-lg text-muted-foreground mb-8">
-              A single donation of $15k covers the manufacturing, logistics, and installation of a full unit, securing clean water for thousands of people.
+              A single donation of $80,000 covers the manufacturing, logistics, and installation of a full unit — each station produces <strong>100,000 liters of clean filtered water every day</strong>, securing safe drinking water for thousands of people.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/donate">
