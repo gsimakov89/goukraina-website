@@ -83,6 +83,7 @@ export default function Impact() {
                   src={p.src}
                   alt={p.alt}
                   className="max-h-24 w-auto object-contain"
+                  loading="lazy"
                 />
               </div>
             ))}

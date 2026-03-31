@@ -12,7 +12,7 @@ export default function PageMeta({
   title, 
   description, 
   path = "", 
-  image = "/images/hero-bg.png", 
+  image = "/opengraph.jpg", 
   type = "website" 
 }: PageMetaProps) {
   const siteUrl = "https://www.goukraina.org";

@@ -87,7 +87,7 @@ export default function Reh2o() {
       {/* Hero */}
       <section className="bg-primary text-white py-24 lg:py-32 relative overflow-hidden">
         <div className="absolute inset-0 opacity-20 mix-blend-overlay">
-          <img src="https://images.unsplash.com/photo-1548883354-7622d03aca27?w=1920&h=1080&fit=crop" alt="Water texture" className="w-full h-full object-cover" />
+          <img src="https://images.unsplash.com/photo-1548883354-7622d03aca27?w=1920&h=1080&fit=crop" alt="Water texture" className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white text-sm font-bold tracking-wide uppercase mb-6 backdrop-blur-md border border-white/20">
@@ -209,6 +209,7 @@ export default function Reh2o() {
                   src={img.src}
                   alt={img.alt}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
               </button>

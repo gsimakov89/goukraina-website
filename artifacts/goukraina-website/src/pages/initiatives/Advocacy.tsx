@@ -55,6 +55,7 @@ export default function Advocacy() {
                   src="/images/ombudsman-logo.png"
                   alt="Office of the Ombudsman of Ukraine logo"
                   className="h-24 w-auto object-contain"
+                  loading="lazy"
                 />
                 <div>
                   <div className="text-sm font-bold uppercase tracking-widest text-primary mb-1">Official Partnership</div>
@@ -80,6 +81,7 @@ export default function Advocacy() {
                 src="/images/ombudsman-meeting.png"
                 alt="Go Ukraina delegation meeting with Ombudsman Dmytro Lubinets in Kyiv"
                 className="w-full h-auto object-cover"
+                loading="lazy"
               />
             </div>
           </div>
@@ -144,6 +146,7 @@ export default function Advocacy() {
               src="/images/ombudsman-kyiv.png"
               alt="Human Rights Topics in Ukraine — Ombudsman's office team at high-level briefing in Kyiv"
               className="w-full h-auto object-cover"
+              loading="lazy"
             />
           </div>
         </div>

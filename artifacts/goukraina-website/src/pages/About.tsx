@@ -66,6 +66,7 @@ export default function About() {
                 src="/images/german-simakovski.png"
                 alt="German Simakovski, Co-Chairman of Go Ukraina"
                 className="w-40 h-40 rounded-full mx-auto mb-6 object-cover"
+                loading="lazy"
               />
               <h3 className="font-display text-xl font-bold mb-1">German Simakovski</h3>
               <p className="text-primary font-semibold mb-3 text-sm">Co-Chairman</p>
@@ -76,6 +77,7 @@ export default function About() {
                 src="/images/olena-simakovski.png"
                 alt="Olena Simakovski, Co-Chairman of Go Ukraina"
                 className="w-40 h-40 rounded-full mx-auto mb-6 object-cover object-top"
+                loading="lazy"
               />
               <h3 className="font-display text-xl font-bold mb-1">Olena Simakovski</h3>
               <p className="text-primary font-semibold mb-3 text-sm">Co-Chairman</p>
@@ -86,6 +88,7 @@ export default function About() {
                 src="/images/adrien-tompert.jpg"
                 alt="Adrien Tompert, Program Development Associate at Go Ukraina"
                 className="w-40 h-40 rounded-full mx-auto mb-6 object-cover object-top ml-[33px] mt-[0px] pl-[10px] pr-[10px] pt-[2px] pb-[2px]"
+                loading="lazy"
               />
               <h3 className="font-display text-xl font-bold mb-1">Adrien Tompert</h3>
               <p className="text-primary font-semibold mb-3 text-sm">Program Development Associate</p>
@@ -96,6 +99,7 @@ export default function About() {
                 src="/images/nikol-bohach.png"
                 alt="Nikol Bohach, Volunteer Coordinator at Go Ukraina"
                 className="w-40 h-40 rounded-full mx-auto mb-6 object-cover object-top"
+                loading="lazy"
               />
               <h3 className="font-display text-xl font-bold mb-1">Nikol Bohach</h3>
               <p className="text-primary font-semibold mb-3 text-sm">Volunteer Coordinator</p>
