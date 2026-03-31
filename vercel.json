@@ -1,0 +1,9 @@
+{
+  "buildCommand": "pnpm --filter @workspace/goukraina-website run build",
+  "outputDirectory": "artifacts/goukraina-website/dist/public",
+  "installCommand": "pnpm install",
+  "framework": null,
+  "env": {
+    "BASE_PATH": "/"
+  }
+}
