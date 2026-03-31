@@ -66,7 +66,7 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center bg-[#0D1B2A] overflow-hidden pt-20">
         <div className="absolute inset-0 z-0">
           <video
-            src="/videos/URS_2025.mp4"
+            src="/videos/URS_2025_web.mp4"
             autoPlay
             muted
             loop

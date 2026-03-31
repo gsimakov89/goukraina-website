@@ -41,7 +41,7 @@ export default function About() {
             </div>
             <div className="rounded-3xl overflow-hidden shadow-2xl">
               <video
-                src="/videos/URS_2025.mp4"
+                src="/videos/URS_2025_web.mp4"
                 autoPlay
                 muted
                 loop
