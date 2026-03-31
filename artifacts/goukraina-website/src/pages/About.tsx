@@ -59,7 +59,11 @@ export default function About() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
             <div className="text-center">
-              <PlaceholderImage text="German Simakovski Portrait" className="w-48 h-48 rounded-full mx-auto mb-6 bg-white/10" />
+              <img
+                src="/images/german-simakovski.png"
+                alt="German Simakovski, Co-Chairman of Go Ukraina"
+                className="w-48 h-48 rounded-full mx-auto mb-6 object-cover"
+              />
               <h3 className="font-display text-2xl font-bold mb-1">German Simakovski</h3>
               <p className="text-primary font-semibold mb-4">Co-Chairman</p>
               <p className="text-sm text-gray-400 px-4">Spearheading strategic partnerships and operations, driving our clean water and energy infrastructure deployments.</p>
