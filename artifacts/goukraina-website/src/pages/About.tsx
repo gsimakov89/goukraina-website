@@ -1,5 +1,4 @@
 import PageMeta from "@/components/seo/PageMeta";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { CheckCircle2 } from "lucide-react";
 
 export default function About() {
@@ -69,7 +68,11 @@ export default function About() {
               <p className="text-sm text-gray-400 px-4">Spearheading strategic partnerships and operations, driving our clean water and energy infrastructure deployments.</p>
             </div>
             <div className="text-center">
-              <PlaceholderImage text="Olena Simakovski Portrait" className="w-48 h-48 rounded-full mx-auto mb-6 bg-white/10" />
+              <img
+                src="/images/olena-simakovski.png"
+                alt="Olena Simakovski, Co-Chairman of Go Ukraina"
+                className="w-48 h-48 rounded-full mx-auto mb-6 object-cover object-top"
+              />
               <h3 className="font-display text-2xl font-bold mb-1">Olena Simakovski</h3>
               <p className="text-primary font-semibold mb-4">Co-Chairman</p>
               <p className="text-sm text-gray-400 px-4">Leading advocacy, fundraising initiatives, and the organization of the Ukraine Reconstruction Summit.</p>
