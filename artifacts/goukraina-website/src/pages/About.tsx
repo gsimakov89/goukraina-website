@@ -8,7 +8,6 @@ export default function About() {
         title="About Us" 
         description="Learn about Go Ukraina's mission, leadership, and our commitment to rebuilding Ukraine one community at a time." 
       />
-
       <section className="py-20 lg:py-32 bg-muted/30 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
           <h1 className="font-display text-5xl lg:text-6xl font-bold mb-6 text-foreground">
@@ -19,7 +18,6 @@ export default function About() {
           </p>
         </div>
       </section>
-
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -48,7 +46,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
       <section className="py-24 bg-foreground text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -81,7 +78,7 @@ export default function About() {
               <img
                 src="/images/adrien-tompert.jpg"
                 alt="Adrien Tompert, Program Development Associate at Go Ukraina"
-                className="w-40 h-40 rounded-full mx-auto mb-6 object-cover object-top"
+                className="w-40 h-40 rounded-full mx-auto mb-6 object-cover object-top ml-[33px] mt-[0px] pl-[10px] pr-[10px] pt-[2px] pb-[2px]"
               />
               <h3 className="font-display text-xl font-bold mb-1">Adrien Tompert</h3>
               <p className="text-primary font-semibold mb-3 text-sm">Program Development Associate</p>
