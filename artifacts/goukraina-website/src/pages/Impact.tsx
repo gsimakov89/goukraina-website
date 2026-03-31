@@ -1,11 +1,10 @@
 import PageMeta from "@/components/seo/PageMeta";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
 const data = [
   { name: 'ReH2O Clean Water', value: 45, color: '#005BBB' },
   { name: 'Power Generators', value: 30, color: '#FFD700' },
-  { name: 'Modular Homes', value: 15, color: '#0D1B2A' },
+  { name: 'Advocacy', value: 15, color: '#0D1B2A' },
   { name: 'Ukraine Dreamzzz', value: 10, color: '#6B7280' },
 ];
 
@@ -73,10 +72,20 @@ export default function Impact() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-3xl font-bold mb-10 text-center">Our Trusted Partners</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <PlaceholderImage text="Global WASH Cluster Logo" className="aspect-square rounded-2xl bg-muted" />
-            <PlaceholderImage text="State Agency of Reconstruction" className="aspect-square rounded-2xl bg-muted" />
-            <PlaceholderImage text="Lives Amplified" className="aspect-square rounded-2xl bg-muted" />
-            <PlaceholderImage text="Ukraine Trade Mission" className="aspect-square rounded-2xl bg-muted" />
+            {[
+              { src: "/images/partners/ombudsman.png", alt: "Office of the Ombudsman of Ukraine" },
+              { src: "/images/partners/consulate-sf.jpg", alt: "Ukrainian Consulate San Francisco" },
+              { src: "/images/partners/reua.png", alt: "REUA — Rebuild Our Ukraine" },
+              { src: "/images/partners/partner-4.png", alt: "Partner organization" },
+            ].map((p) => (
+              <div key={p.src} className="flex items-center justify-center p-6 rounded-2xl bg-muted/40 border border-border hover:shadow-md transition-shadow">
+                <img
+                  src={p.src}
+                  alt={p.alt}
+                  className="max-h-24 w-auto object-contain"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
