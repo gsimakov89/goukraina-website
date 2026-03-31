@@ -22,6 +22,7 @@ import Donate from "@/pages/Donate";
 import Impact from "@/pages/Impact";
 import Events from "@/pages/Events";
 import Contact from "@/pages/Contact";
+import DriveImporter from "@/pages/DriveImporter";
 import NotFound from "@/pages/not-found";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
@@ -63,6 +64,7 @@ function Router() {
           <Route path="/impact" component={Impact} />
           <Route path="/events" component={Events} />
           <Route path="/contact" component={Contact} />
+          <Route path="/admin/drive" component={DriveImporter} />
           
           <Route component={NotFound} />
         </Switch>
