@@ -40,8 +40,15 @@ export default function About() {
               </ul>
             </div>
             <div className="rounded-3xl overflow-hidden shadow-2xl">
-              {/* editorial team discussion photo */}
-              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&h=1600&fit=crop" alt="Go Ukraina team" className="w-full h-auto object-cover" />
+              <video
+                src="/videos/URS_2025.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                className="w-full h-auto object-cover"
+              />
             </div>
           </div>
         </div>
