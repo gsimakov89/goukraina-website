@@ -62,9 +62,9 @@ export default function Header() {
               </div>
             </div>
 
-            <Link href="/summit" className={cn("text-sm font-semibold hover:opacity-80 transition-opacity", textColorClass)}>
+            <a href="https://ursummit.com" target="_blank" rel="noopener noreferrer" className={cn("text-sm font-semibold hover:opacity-80 transition-opacity", textColorClass)}>
               Summit
-            </Link>
+            </a>
             <Link href="/impact" className={cn("text-sm font-semibold hover:opacity-80 transition-opacity", textColorClass)}>
               Impact
             </Link>
@@ -112,7 +112,7 @@ export default function Header() {
               <Link href="/initiatives/ukraine-dreamzzz" className="text-base text-muted-foreground font-medium">Ukraine Dreamzzz</Link>
             </div>
           </div>
-          <Link href="/summit" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Summit</Link>
+          <a href="https://ursummit.com" target="_blank" rel="noopener noreferrer" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Summit</a>
           <Link href="/impact" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Impact</Link>
           <Link href="/blog" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Blog</Link>
           <Link href="/events" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Events</Link>
