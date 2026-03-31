@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowRight, Droplets, Zap, Home as HomeIcon, Heart, Calendar } from "lucide-react";
+import { ArrowRight, Droplets, Zap, Scale, Heart, Calendar } from "lucide-react";
 import PageMeta from "@/components/seo/PageMeta";
 import { Button } from "@/components/ui/button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
@@ -145,10 +145,10 @@ export default function Home() {
               icon={Zap}
             />
             <InitiativeCard 
-              href="/initiatives/modular-homes" 
-              title="Modular Housing" 
-              desc="Building rapid-deployment shelter solutions for families who have lost their homes to artillery strikes."
-              icon={HomeIcon}
+              href="/initiatives/advocacy" 
+              title="Advocacy" 
+              desc="Partnering with the Ukrainian Ombudsman for Human Rights to advance POW releases, return of abducted children, and international accountability."
+              icon={Scale}
             />
           </div>
         </div>

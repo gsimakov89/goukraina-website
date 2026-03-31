@@ -13,7 +13,7 @@ import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Reh2o from "@/pages/initiatives/Reh2o";
 import PowerGenerators from "@/pages/initiatives/PowerGenerators";
-import ModularHomes from "@/pages/initiatives/ModularHomes";
+import Advocacy from "@/pages/initiatives/Advocacy";
 import UkraineDreamzzz from "@/pages/initiatives/UkraineDreamzzz";
 import Summit from "@/pages/Summit";
 import Blog from "@/pages/Blog";
@@ -52,7 +52,7 @@ function Router() {
           
           <Route path="/initiatives/reh2o" component={Reh2o} />
           <Route path="/initiatives/power-generators" component={PowerGenerators} />
-          <Route path="/initiatives/modular-homes" component={ModularHomes} />
+          <Route path="/initiatives/advocacy" component={Advocacy} />
           <Route path="/initiatives/ukraine-dreamzzz" component={UkraineDreamzzz} />
           
           <Route path="/summit" component={Summit} />

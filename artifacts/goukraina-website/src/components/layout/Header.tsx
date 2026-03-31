@@ -56,7 +56,7 @@ export default function Header() {
                 <div className="bg-white rounded-xl shadow-xl border border-border p-2 flex flex-col gap-1">
                   <Link href="/initiatives/reh2o" className="px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-primary rounded-lg transition-colors font-medium">ReH2O Clean Water</Link>
                   <Link href="/initiatives/power-generators" className="px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-primary rounded-lg transition-colors font-medium">Power Generators</Link>
-                  <Link href="/initiatives/modular-homes" className="px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-primary rounded-lg transition-colors font-medium">Modular Homes</Link>
+                  <Link href="/initiatives/advocacy" className="px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-primary rounded-lg transition-colors font-medium">Advocacy</Link>
                   <Link href="/initiatives/ukraine-dreamzzz" className="px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-primary rounded-lg transition-colors font-medium">Ukraine Dreamzzz</Link>
                 </div>
               </div>
@@ -108,7 +108,7 @@ export default function Header() {
             <div className="flex flex-col pl-4 gap-3 border-l-2 border-primary/20 ml-2 mt-2">
               <Link href="/initiatives/reh2o" className="text-base text-muted-foreground font-medium">ReH2O Clean Water</Link>
               <Link href="/initiatives/power-generators" className="text-base text-muted-foreground font-medium">Power Generators</Link>
-              <Link href="/initiatives/modular-homes" className="text-base text-muted-foreground font-medium">Modular Homes</Link>
+              <Link href="/initiatives/advocacy" className="text-base text-muted-foreground font-medium">Advocacy</Link>
               <Link href="/initiatives/ukraine-dreamzzz" className="text-base text-muted-foreground font-medium">Ukraine Dreamzzz</Link>
             </div>
           </div>

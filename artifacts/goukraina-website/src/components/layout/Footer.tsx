@@ -41,7 +41,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li><Link href="/initiatives/reh2o" className="text-gray-400 hover:text-white transition-colors text-sm">ReH2O Clean Water</Link></li>
               <li><Link href="/initiatives/power-generators" className="text-gray-400 hover:text-white transition-colors text-sm">Power Generators</Link></li>
-              <li><Link href="/initiatives/modular-homes" className="text-gray-400 hover:text-white transition-colors text-sm">Modular Homes</Link></li>
+              <li><Link href="/initiatives/advocacy" className="text-gray-400 hover:text-white transition-colors text-sm">Advocacy</Link></li>
               <li><Link href="/initiatives/ukraine-dreamzzz" className="text-gray-400 hover:text-white transition-colors text-sm">Ukraine Dreamzzz</Link></li>
             </ul>
           </div>
