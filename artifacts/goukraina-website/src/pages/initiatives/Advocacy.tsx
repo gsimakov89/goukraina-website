@@ -75,21 +75,12 @@ export default function Advocacy() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-4">
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src="/images/ombudsman-meeting.png"
-                  alt="Go Ukraina delegation meeting with Ombudsman Dmytro Lubinets in Kyiv"
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src="/images/ombudsman-kyiv.png"
-                  alt="Human Rights Topics in Ukraine — Ombudsman's office team at high-level briefing in Kyiv"
-                  className="w-full h-auto object-cover"
-                />
-              </div>
+            <div className="rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                src="/images/ombudsman-meeting.png"
+                alt="Go Ukraina delegation meeting with Ombudsman Dmytro Lubinets in Kyiv"
+                className="w-full h-auto object-cover"
+              />
             </div>
           </div>
         </div>
@@ -141,6 +132,19 @@ export default function Advocacy() {
                 Hosting high-level virtual policy briefings that connect the Ombudsman's office directly with U.S. congressional offices, advocacy organizations, and humanitarian partners to strengthen coordinated international action.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Between-section photo */}
+      <section className="py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl overflow-hidden shadow-2xl">
+            <img
+              src="/images/ombudsman-kyiv.png"
+              alt="Human Rights Topics in Ukraine — Ombudsman's office team at high-level briefing in Kyiv"
+              className="w-full h-auto object-cover"
+            />
           </div>
         </div>
       </section>
