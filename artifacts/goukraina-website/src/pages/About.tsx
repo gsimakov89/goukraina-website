@@ -56,26 +56,46 @@ export default function About() {
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">Guided by experienced professionals committed to Ukraine's victory and recovery.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 max-w-5xl mx-auto">
             <div className="text-center">
               <img
                 src="/images/german-simakovski.png"
                 alt="German Simakovski, Co-Chairman of Go Ukraina"
-                className="w-48 h-48 rounded-full mx-auto mb-6 object-cover"
+                className="w-40 h-40 rounded-full mx-auto mb-6 object-cover"
               />
-              <h3 className="font-display text-2xl font-bold mb-1">German Simakovski</h3>
-              <p className="text-primary font-semibold mb-4">Co-Chairman</p>
-              <p className="text-sm text-gray-400 px-4">Spearheading strategic partnerships and operations, driving our clean water and energy infrastructure deployments.</p>
+              <h3 className="font-display text-xl font-bold mb-1">German Simakovski</h3>
+              <p className="text-primary font-semibold mb-3 text-sm">Co-Chairman</p>
+              <p className="text-sm text-gray-400 px-2">Spearheading strategic partnerships and operations, driving our clean water and energy infrastructure deployments.</p>
             </div>
             <div className="text-center">
               <img
                 src="/images/olena-simakovski.png"
                 alt="Olena Simakovski, Co-Chairman of Go Ukraina"
-                className="w-48 h-48 rounded-full mx-auto mb-6 object-cover object-top"
+                className="w-40 h-40 rounded-full mx-auto mb-6 object-cover object-top"
               />
-              <h3 className="font-display text-2xl font-bold mb-1">Olena Simakovski</h3>
-              <p className="text-primary font-semibold mb-4">Co-Chairman</p>
-              <p className="text-sm text-gray-400 px-4">Leading advocacy, fundraising initiatives, and the organization of the Ukraine Reconstruction Summit.</p>
+              <h3 className="font-display text-xl font-bold mb-1">Olena Simakovski</h3>
+              <p className="text-primary font-semibold mb-3 text-sm">Co-Chairman</p>
+              <p className="text-sm text-gray-400 px-2">Leading advocacy, fundraising initiatives, and the organization of the Ukraine Reconstruction Summit.</p>
+            </div>
+            <div className="text-center">
+              <img
+                src="/images/adrien-tompert.jpg"
+                alt="Adrien Tompert, Program Development Associate at Go Ukraina"
+                className="w-40 h-40 rounded-full mx-auto mb-6 object-cover object-top"
+              />
+              <h3 className="font-display text-xl font-bold mb-1">Adrien Tompert</h3>
+              <p className="text-primary font-semibold mb-3 text-sm">Program Development Associate</p>
+              <p className="text-sm text-gray-400 px-2">A driven aspiring healthcare professional who has traveled to Ukraine to directly support humanitarian initiatives and fundraising efforts.</p>
+            </div>
+            <div className="text-center">
+              <img
+                src="/images/nikol-bohach.png"
+                alt="Nikol Bohach, Volunteer Coordinator at Go Ukraina"
+                className="w-40 h-40 rounded-full mx-auto mb-6 object-cover object-top"
+              />
+              <h3 className="font-display text-xl font-bold mb-1">Nikol Bohach</h3>
+              <p className="text-primary font-semibold mb-3 text-sm">Volunteer Coordinator</p>
+              <p className="text-sm text-gray-400 px-2">Exemplifying the spirit of service and commitment to international solidarity, coordinating GoUkrainA's volunteer operations.</p>
             </div>
           </div>
         </div>
