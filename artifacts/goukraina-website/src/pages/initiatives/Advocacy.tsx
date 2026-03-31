@@ -75,12 +75,21 @@ export default function Advocacy() {
                 </p>
               </div>
             </div>
-            <div className="rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src="/images/ombudsman-meeting.png"
-                alt="Go Ukraina delegation meeting with Ombudsman Dmytro Lubinets in Kyiv"
-                className="w-full h-auto object-cover"
-              />
+            <div className="flex flex-col gap-4">
+              <div className="rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  src="/images/ombudsman-meeting.png"
+                  alt="Go Ukraina delegation meeting with Ombudsman Dmytro Lubinets in Kyiv"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              <div className="rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  src="/images/ombudsman-kyiv.png"
+                  alt="Human Rights Topics in Ukraine — Ombudsman's office team at high-level briefing in Kyiv"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
