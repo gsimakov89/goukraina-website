@@ -3,6 +3,7 @@ import PageMeta from "@/components/seo/PageMeta";
 import { ArticleSchema } from "@/components/seo/SchemaOrg";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import GivebutterButton from "@/components/GivebutterButton";
 import { Droplets, Sun, Activity, ShieldCheck, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const galleryImages = [
@@ -241,11 +242,7 @@ export default function Reh2o() {
               A single donation of $80,000 covers the manufacturing, logistics, and installation of a full unit — each station produces <strong>100,000 liters of clean filtered water every day</strong>, securing safe drinking water for thousands of people.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link href="/donate">
-                <Button size="lg" className="bg-primary text-white hover:bg-primary/90 text-lg h-14 px-8 w-full sm:w-auto">
-                  Fund a Station
-                </Button>
-              </Link>
+              <GivebutterButton />
               <Link href="/contact">
                 <Button size="lg" variant="outline" className="text-lg h-14 px-8 w-full sm:w-auto">
                   Partner With Us

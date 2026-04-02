@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import GivebutterButton from "@/components/GivebutterButton";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -81,11 +82,7 @@ export default function Header() {
             <Link href="/contact" className={cn("text-sm font-semibold hover:opacity-80 transition-opacity", textColorClass)}>
               Contact
             </Link>
-            <Link href="/donate">
-              <Button className="bg-primary text-white hover:bg-primary/90 font-bold px-6 shadow-md shadow-primary/20">
-                Donate Now →
-              </Button>
-            </Link>
+            <GivebutterButton />
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -117,10 +114,8 @@ export default function Header() {
           <Link href="/blog" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Blog</Link>
           <Link href="/events" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Events</Link>
           <Link href="/contact" className="text-lg font-semibold text-foreground py-2">Contact</Link>
-          <div className="pt-4">
-            <Link href="/donate" className="w-full">
-              <Button className="w-full bg-primary text-white font-bold h-12 text-lg">Donate Now →</Button>
-            </Link>
+          <div className="pt-4 flex justify-center">
+            <GivebutterButton />
           </div>
         </div>
       )}

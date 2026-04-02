@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { ArrowRight, Droplets, Zap, Scale, Heart, Calendar } from "lucide-react";
 import PageMeta from "@/components/seo/PageMeta";
 import { Button } from "@/components/ui/button";
+import GivebutterButton from "@/components/GivebutterButton";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { posts } from "@/lib/posts";
 import { motion } from "framer-motion";
@@ -91,11 +92,7 @@ export default function Home() {
               Go Ukraina is a Los Angeles-based 501(c)(3) nonprofit delivering essential aid and rebuilding infrastructure in communities devastated by war.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/donate">
-                <Button size="lg" className="bg-accent text-accent-foreground hover:bg-white text-lg h-14 px-8 rounded-xl font-bold">
-                  Donate Now
-                </Button>
-              </Link>
+              <GivebutterButton />
               <Link href="/impact">
                 <Button size="lg" variant="outline" className="border-white/20 text-foreground bg-white/90 hover:bg-white text-lg h-14 px-8 rounded-xl font-bold backdrop-blur-sm">
                   See Our Impact
@@ -163,11 +160,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6">Your Donation Saves Lives.</h2>
           <p className="text-xl text-white/80 mb-10 font-light">100% of your tax-deductible contribution goes directly to funding our infrastructure programs in Ukraine.</p>
-          <Link href="/donate">
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-white text-lg h-16 px-12 rounded-full font-bold shadow-xl shadow-black/10">
-              Fund the Next Mission
-            </Button>
-          </Link>
+          <GivebutterButton />
         </div>
       </section>
 

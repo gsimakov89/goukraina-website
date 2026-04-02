@@ -1,6 +1,6 @@
 import PageMeta from "@/components/seo/PageMeta";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, ShieldCheck, Heart } from "lucide-react";
+import { ShieldCheck, Heart } from "lucide-react";
+import GivebutterButton from "@/components/GivebutterButton";
 
 export default function Donate() {
   return (
@@ -48,12 +48,10 @@ export default function Donate() {
             <div className="lg:col-span-2">
               <div className="bg-muted rounded-3xl p-8 sticky top-32 border border-border shadow-lg">
                 <h3 className="font-display text-2xl font-bold mb-6">Make a Donation</h3>
-                <p className="text-muted-foreground mb-8">We process our online donations securely through GoFundMe to ensure maximum transparency and low fees.</p>
-                <a href="https://www.gofundme.com/f/goukraina" target="_blank" rel="noopener noreferrer" className="block w-full">
-                  <Button size="lg" className="w-full h-16 text-lg font-bold bg-primary hover:bg-primary/90">
-                    Donate via GoFundMe <ExternalLink className="w-5 h-5 ml-2" />
-                  </Button>
-                </a>
+                <p className="text-muted-foreground mb-8">Donate securely through Givebutter. 100% goes directly to our programs in Ukraine.</p>
+                <div className="flex justify-center">
+                  <GivebutterButton />
+                </div>
                 
                 <div className="mt-8 pt-8 border-t border-border">
                   <h4 className="font-bold mb-4">Other Ways to Give</h4>

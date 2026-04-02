@@ -2,6 +2,7 @@ import PageMeta from "@/components/seo/PageMeta";
 import { ArticleSchema } from "@/components/seo/SchemaOrg";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import GivebutterButton from "@/components/GivebutterButton";
 import { Scale, Users, Globe, ShieldCheck } from "lucide-react";
 
 const photos = [
@@ -210,11 +211,7 @@ export default function Advocacy() {
             Every dollar supports our ability to maintain institutional partnerships, host policy briefings, and keep Ukraine's human rights crisis visible on the international stage.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href="/donate">
-              <Button size="lg" className="bg-primary text-white hover:bg-primary/90 text-lg h-14 px-8 w-full sm:w-auto">
-                Donate to Support Advocacy
-              </Button>
-            </Link>
+            <GivebutterButton />
             <Link href="/contact">
               <Button size="lg" variant="outline" className="text-lg h-14 px-8 w-full sm:w-auto">
                 Partner With Us

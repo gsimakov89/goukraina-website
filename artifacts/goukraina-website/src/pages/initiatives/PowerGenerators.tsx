@@ -1,7 +1,7 @@
 import PageMeta from "@/components/seo/PageMeta";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
-import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import GivebutterButton from "@/components/GivebutterButton";
 
 export default function PowerGenerators() {
   return (
@@ -30,7 +30,7 @@ export default function PowerGenerators() {
             <div className="flex flex-col justify-center items-center bg-card border border-border rounded-3xl p-10 text-center shadow-lg">
               <h3 className="font-display text-3xl font-bold mb-4">Power a Community</h3>
               <p className="text-muted-foreground mb-8">Help us purchase and transport the next shipment of generators before winter sets in.</p>
-              <Link href="/donate"><Button size="lg" className="h-14 px-8 text-lg font-bold">Donate to Power Fund</Button></Link>
+              <GivebutterButton />
             </div>
           </div>
         </div>

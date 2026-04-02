@@ -4,7 +4,7 @@ import { ArticleSchema } from "@/components/seo/SchemaOrg";
 import { getPostBySlug, posts } from "@/lib/posts";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import NotFound from "./not-found";
-import { Button } from "@/components/ui/button";
+import GivebutterButton from "@/components/GivebutterButton";
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -57,9 +57,7 @@ export default function BlogPost() {
               <div className="sticky top-32 bg-muted rounded-2xl p-8 border border-border">
                 <h3 className="font-display text-xl font-bold mb-4">Support Our Mission</h3>
                 <p className="text-sm text-muted-foreground mb-6">Articles like this highlight the urgent need for action. 100% of your donation funds our programs directly.</p>
-                <Link href="/donate">
-                  <Button className="w-full font-bold">Donate Now</Button>
-                </Link>
+                <GivebutterButton />
               </div>
             </div>
           </div>
