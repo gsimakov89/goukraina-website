@@ -47,7 +47,7 @@ export default function Contact() {
       } else {
         toast({
           title: "Something went wrong",
-          description: "Please try again or email us directly at info@goukraina.com",
+          description: json.message || "Please try again or email us directly at info@goukraina.com",
           variant: "destructive",
         });
       }
