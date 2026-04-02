@@ -16,19 +16,32 @@ export default function Contact() {
     setIsSubmitting(true);
 
     const form = e.currentTarget;
-    const data = new FormData(form);
-    data.append("_subject", "New Contact Form Submission — Go Ukraina");
-    data.append("_captcha", "false");
-    data.append("_template", "table");
+    const formData = new FormData(form);
+
+    const payload = {
+      access_key: "11162fdd-e643-4174-83a9-a036e597dcef",
+      subject: "New Contact Form Submission — Go Ukraina",
+      from_name: "Go Ukraina Website",
+      first_name: formData.get("first_name"),
+      last_name: formData.get("last_name"),
+      email: formData.get("email"),
+      subject_field: formData.get("subject"),
+      message: formData.get("message"),
+    };
 
     try {
-      const res = await fetch("https://formsubmit.co/greg@goukraina.com", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { Accept: "application/json" },
-        body: data,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
-      if (res.ok) {
+      const json = await res.json();
+
+      if (json.success) {
         setSubmitted(true);
         form.reset();
       } else {

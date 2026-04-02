@@ -31,3 +31,8 @@ channel = "stable-25_05"
 
 [objectStorage]
 defaultBucketID = "replit-objstore-27e9d4cd-a0af-4c4e-a7ed-28df7f9983dc"
+
+[userenv]
+
+[userenv.shared]
+VITE_WEB3FORMS_ACCESS_KEY = "${WEB3FORMS_ACCESS_KEY}"
