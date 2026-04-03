@@ -7,7 +7,7 @@ import { Scale, Users, Globe, ShieldCheck } from "lucide-react";
 
 const photos = [
   {
-    src: "/images/ombudsman-meeting.png",
+    src: "/images/ombudsman-meeting.jpg",
     alt: "Go Ukraina delegation meeting with Ukrainian Ombudsman Dmytro Lubinets in Kyiv",
   },
 ];
@@ -79,7 +79,7 @@ export default function Advocacy() {
             </div>
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="/images/ombudsman-meeting.png"
+                src="/images/ombudsman-meeting.jpg"
                 alt="Go Ukraina delegation meeting with Ombudsman Dmytro Lubinets in Kyiv"
                 className="w-full h-auto object-cover"
                 loading="lazy"
@@ -144,7 +144,7 @@ export default function Advocacy() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl overflow-hidden shadow-2xl">
             <img
-              src="/images/ombudsman-kyiv.png"
+              src="/images/ombudsman-kyiv.jpg"
               alt="Human Rights Topics in Ukraine — Ombudsman's office team at high-level briefing in Kyiv"
               className="w-full h-auto object-cover"
               loading="lazy"

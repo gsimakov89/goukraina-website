@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Droplets, Zap, Scale, Heart, Calendar } from "lucide-react";
 import PageMeta from "@/components/seo/PageMeta";
@@ -55,6 +56,16 @@ function InitiativeCard({ title, desc, icon: Icon, href }: { title: string, desc
 
 export default function Home() {
   const recentPosts = posts.slice(0, 3);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const tryPlay = () => { video.play().catch(() => {}); };
+    tryPlay();
+    video.addEventListener("canplay", tryPlay);
+    return () => video.removeEventListener("canplay", tryPlay);
+  }, []);
 
   return (
     <div className="w-full">
@@ -67,6 +78,7 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center bg-[#0D1B2A] overflow-hidden pt-20">
         <div className="absolute inset-0 z-0">
           <video
+            ref={videoRef}
             src="/videos/URS_2025_web.mp4"
             autoPlay
             muted
