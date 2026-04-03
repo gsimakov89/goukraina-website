@@ -1,7 +1,18 @@
+import { useRef, useEffect } from "react";
 import PageMeta from "@/components/seo/PageMeta";
 import { CheckCircle2 } from "lucide-react";
 
 export default function About() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const tryPlay = () => { video.play().catch(() => {}); };
+    video.addEventListener("canplay", tryPlay);
+    return () => video.removeEventListener("canplay", tryPlay);
+  }, []);
+
   return (
     <div className="w-full pt-20">
       <PageMeta 
@@ -41,6 +52,7 @@ export default function About() {
             </div>
             <div className="rounded-3xl overflow-hidden shadow-2xl">
               <video
+                ref={videoRef}
                 src="/videos/URS_2025_web.mp4"
                 autoPlay
                 muted
