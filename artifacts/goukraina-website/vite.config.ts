@@ -1,10 +1,136 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import fs from "fs";
 
 const port = Number(process.env.PORT) || 3000;
 const basePath = process.env.BASE_PATH || "/";
+
+const ROUTES: Record<string, { title: string; description: string }> = {
+  "/": {
+    title: "Go Ukraina — Clean Water, Power & Hope for Ukraine",
+    description:
+      "Go Ukraina is a Los Angeles-based 501(c)(3) nonprofit delivering essential aid, clean water, and rebuilding infrastructure in war-affected Ukraine.",
+  },
+  "/about": {
+    title: "About Us | Go Ukraina",
+    description:
+      "Learn about Go Ukraina — our mission, leadership team, and our commitment to rebuilding Ukrainian communities affected by war.",
+  },
+  "/initiatives/reh2o": {
+    title: "ReH2O Clean Water Initiative | Go Ukraina",
+    description:
+      "Deploying solar-powered reverse osmosis water stations to communities across Ukraine that have lost access to clean water.",
+  },
+  "/initiatives/power-generators": {
+    title: "Power Generators Initiative | Go Ukraina",
+    description:
+      "Supplying critical backup power generators to hospitals, schools, and heating centers during grid blackouts in Ukraine.",
+  },
+  "/initiatives/advocacy": {
+    title: "Advocacy — Human Rights & Humanitarian Policy | Go Ukraina",
+    description:
+      "Go Ukraina partners with the Ukrainian Ombudsman for Human Rights to advocate for Ukrainian POWs, abducted children, and civilian protection.",
+  },
+  "/initiatives/ukraine-dreamzzz": {
+    title: "Ukraine Dreamzzz Initiative | Go Ukraina",
+    description:
+      "Restoring hope for Ukrainian children displaced by war through education, shelter, and emotional support programs.",
+  },
+  "/summit": {
+    title: "Ukrainian Reconstruction Summit | Go Ukraina",
+    description:
+      "The Ukrainian Reconstruction Summit brings together leaders, donors, and organizations to coordinate humanitarian aid and reconstruction efforts.",
+  },
+  "/blog": {
+    title: "Blog | Go Ukraina",
+    description:
+      "Updates, stories, and insights from Go Ukraina's humanitarian work in Ukraine.",
+  },
+  "/blog/ukraine-water-crisis-wash-cluster": {
+    title: "Addressing the Water Crisis in Ukraine | Go Ukraina Blog",
+    description:
+      "Go Ukraina is partnering with the WASH Cluster to deploy solar-powered water purification stations across war-affected regions of Ukraine.",
+  },
+  "/blog/ukrainian-pows-humanitarian-crisis": {
+    title: "Ukrainian POWs and the Humanitarian Crisis | Go Ukraina Blog",
+    description:
+      "An in-depth look at the humanitarian situation facing Ukrainian prisoners of war and Go Ukraina's advocacy efforts.",
+  },
+  "/blog/clean-water-war-affected-regions": {
+    title: "Clean Water Access in War-Affected Regions | Go Ukraina Blog",
+    description:
+      "How Go Ukraina is restoring clean water access to communities devastated by the conflict in Ukraine.",
+  },
+  "/donate": {
+    title: "Donate | Go Ukraina",
+    description:
+      "Support Go Ukraina's humanitarian mission. Your donation delivers clean water, power, and hope to communities in Ukraine.",
+  },
+  "/impact": {
+    title: "Our Impact | Go Ukraina",
+    description:
+      "See the measurable impact of Go Ukraina's work — water stations deployed, generators distributed, and lives changed in Ukraine.",
+  },
+  "/events": {
+    title: "Events | Go Ukraina",
+    description:
+      "Upcoming events, fundraisers, and policy briefings hosted by Go Ukraina to support humanitarian efforts in Ukraine.",
+  },
+  "/contact": {
+    title: "Contact Us | Go Ukraina",
+    description:
+      "Get in touch with Go Ukraina to discuss partnerships, donations, volunteering, or media inquiries.",
+  },
+};
+
+function staticPrerenderPlugin(): Plugin {
+  return {
+    name: "static-prerender",
+    apply: "build",
+    enforce: "post",
+    closeBundle() {
+      const outDir = path.resolve(import.meta.dirname, "dist/public");
+      const indexPath = path.join(outDir, "index.html");
+      if (!fs.existsSync(indexPath)) return;
+      const indexHtml = fs.readFileSync(indexPath, "utf-8");
+
+      for (const [route, meta] of Object.entries(ROUTES)) {
+        if (route === "/") continue;
+
+        let html = indexHtml
+          .replace(/(<title>)[^<]*(< \/title>|<\/title>)/, `$1${meta.title}</title>`)
+          .replace(
+            /(<meta\s+name="description"\s+content=")[^"]*(")/,
+            `$1${meta.description}$2`,
+          )
+          .replace(
+            /(<meta\s+property="og:title"\s+content=")[^"]*(")/,
+            `$1${meta.title}$2`,
+          )
+          .replace(
+            /(<meta\s+property="og:description"\s+content=")[^"]*(")/,
+            `$1${meta.description}$2`,
+          )
+          .replace(
+            /(<meta\s+name="twitter:title"\s+content=")[^"]*(")/,
+            `$1${meta.title}$2`,
+          )
+          .replace(
+            /(<meta\s+name="twitter:description"\s+content=")[^"]*(")/,
+            `$1${meta.description}$2`,
+          );
+
+        const routeDir = path.join(outDir, route);
+        fs.mkdirSync(routeDir, { recursive: true });
+        fs.writeFileSync(path.join(routeDir, "index.html"), html);
+      }
+
+      console.log(`[prerender] Generated ${Object.keys(ROUTES).length - 1} static pages.`);
+    },
+  };
+}
 
 export default defineConfig({
   base: basePath,
@@ -26,7 +152,7 @@ export default defineConfig({
             m.devBanner(),
           ),
         ]
-      : []),
+      : [staticPrerenderPlugin()]),
   ],
   resolve: {
     alias: {
