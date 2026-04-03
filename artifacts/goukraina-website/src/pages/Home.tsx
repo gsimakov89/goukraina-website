@@ -61,10 +61,15 @@ export default function Home() {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    video.muted = true;
     const tryPlay = () => { video.play().catch(() => {}); };
     tryPlay();
     video.addEventListener("canplay", tryPlay);
-    return () => video.removeEventListener("canplay", tryPlay);
+    video.addEventListener("loadeddata", tryPlay);
+    return () => {
+      video.removeEventListener("canplay", tryPlay);
+      video.removeEventListener("loadeddata", tryPlay);
+    };
   }, []);
 
   return (
