@@ -104,7 +104,8 @@ function buildRoutes(): Record<string, { title: string; description: string }> {
           };
         }
       }
-    } catch {
+    } catch (e) {
+      console.warn("[prerender] Failed to read posts-google.json:", e);
     }
   }
   return routes;

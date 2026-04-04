@@ -33,11 +33,19 @@ interface SyncedPost {
   _driveName?: string;
 }
 
-interface DocsResponse {
+interface DocsSuccessResponse {
   docs: DriveDoc[];
-  folderFound: boolean;
-  error?: string;
+  folderFound: true;
+  error?: never;
 }
+
+interface DocsErrorResponse {
+  docs?: never;
+  folderFound: false;
+  error: string;
+}
+
+type DocsApiResponse = DocsSuccessResponse | DocsErrorResponse;
 
 interface SyncResult {
   success: boolean;
@@ -77,14 +85,14 @@ export default function BlogSync() {
     try {
       const res = await fetch(`${API_BASE}/drive/docs`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data: DocsResponse = await res.json();
-      if ((data as any).error && !(data as any).folderFound) {
-        setFolderError((data as any).error);
+      const data: DocsApiResponse = await res.json();
+      if (!data.folderFound) {
+        setFolderError(data.error);
         setFolderFound(false);
         setDocs([]);
       } else {
-        setDocs(data.docs ?? []);
-        setFolderFound(data.folderFound);
+        setDocs(data.docs);
+        setFolderFound(true);
       }
     } catch (e: any) {
       setDocsError(e.message);
@@ -98,7 +106,9 @@ export default function BlogSync() {
       const res = await fetch(`${API_BASE}/drive/synced-posts`);
       if (!res.ok) return;
       setSyncedPosts(await res.json());
-    } catch {}
+    } catch (e) {
+      console.warn("fetchSyncedPosts failed:", e);
+    }
   };
 
   useEffect(() => {
