@@ -5,17 +5,13 @@ import path from "path";
 
 const router = Router();
 
-const WEBSITE_PUBLIC = path.resolve(
-  __dirname,
-  "../../goukraina-website/public"
-);
-
-const WEBSITE_SRC_LIB = path.resolve(
-  __dirname,
-  "../../goukraina-website/src/lib"
-);
-
+// At runtime __dirname = artifacts/api-server/dist/ (esbuild bundles to dist/index.mjs).
+// Two levels up lands at the workspace root (artifacts/), then into the sibling app.
+const WEBSITE_PUBLIC = path.resolve(__dirname, "../../goukraina-website/public");
+const WEBSITE_SRC_LIB = path.resolve(__dirname, "../../goukraina-website/src/lib");
 const POSTS_JSON_PATH = path.join(WEBSITE_SRC_LIB, "posts-google.json");
+
+console.log("[drive] WEBSITE_SRC_LIB resolved to:", WEBSITE_SRC_LIB);
 
 const BLOG_FOLDER_NAME = "Go Ukraina Blog Posts";
 
@@ -337,6 +333,7 @@ router.post("/drive/sync-blogs", async (req, res) => {
     if (!fs.existsSync(WEBSITE_SRC_LIB)) {
       fs.mkdirSync(WEBSITE_SRC_LIB, { recursive: true });
     }
+    console.log("[sync-blogs] Writing", posts.length, "posts to:", POSTS_JSON_PATH);
     fs.writeFileSync(POSTS_JSON_PATH, JSON.stringify(posts, null, 2), "utf-8");
 
     res.json({
