@@ -85,6 +85,31 @@ const ROUTES: Record<string, { title: string; description: string }> = {
   },
 };
 
+function buildRoutes(): Record<string, { title: string; description: string }> {
+  const routes = { ...ROUTES };
+  const googlePostsPath = path.resolve(import.meta.dirname, "src/lib/posts-google.json");
+  if (fs.existsSync(googlePostsPath)) {
+    try {
+      const googlePosts = JSON.parse(fs.readFileSync(googlePostsPath, "utf-8")) as Array<{
+        slug: string;
+        title: string;
+        excerpt: string;
+      }>;
+      for (const post of googlePosts) {
+        const routeKey = `/blog/${post.slug}`;
+        if (!routes[routeKey]) {
+          routes[routeKey] = {
+            title: `${post.title} | Go Ukraina Blog`,
+            description: post.excerpt || `Read ${post.title} on the Go Ukraina blog.`,
+          };
+        }
+      }
+    } catch {
+    }
+  }
+  return routes;
+}
+
 function staticPrerenderPlugin(): Plugin {
   return {
     name: "static-prerender",
@@ -92,11 +117,12 @@ function staticPrerenderPlugin(): Plugin {
     enforce: "post",
     closeBundle() {
       const outDir = path.resolve(import.meta.dirname, "dist/public");
+      const finalRoutes = buildRoutes();
       const indexPath = path.join(outDir, "index.html");
       if (!fs.existsSync(indexPath)) return;
       const indexHtml = fs.readFileSync(indexPath, "utf-8");
 
-      for (const [route, meta] of Object.entries(ROUTES)) {
+      for (const [route, meta] of Object.entries(finalRoutes)) {
         if (route === "/") continue;
 
         let html = indexHtml
@@ -127,7 +153,8 @@ function staticPrerenderPlugin(): Plugin {
         fs.writeFileSync(path.join(routeDir, "index.html"), html);
       }
 
-      console.log(`[prerender] Generated ${Object.keys(ROUTES).length - 1} static pages.`);
+      const total = Object.keys(finalRoutes).length - 1;
+      console.log(`[prerender] Generated ${total} static pages.`);
     },
   };
 }

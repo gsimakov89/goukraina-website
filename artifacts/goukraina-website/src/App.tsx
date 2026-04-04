@@ -23,6 +23,7 @@ import Impact from "@/pages/Impact";
 import Events from "@/pages/Events";
 import Contact from "@/pages/Contact";
 import DriveImporter from "@/pages/DriveImporter";
+import BlogSync from "@/pages/admin/BlogSync";
 import NotFound from "@/pages/not-found";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
@@ -65,6 +66,7 @@ function Router() {
           <Route path="/events" component={Events} />
           <Route path="/contact" component={Contact} />
           <Route path="/admin/drive" component={DriveImporter} />
+          <Route path="/admin/blog-sync" component={BlogSync} />
           
           <Route component={NotFound} />
         </Switch>

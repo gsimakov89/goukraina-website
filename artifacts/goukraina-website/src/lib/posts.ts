@@ -1,3 +1,5 @@
+import googlePostsRaw from "./posts-google.json";
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -9,7 +11,7 @@ export interface BlogPost {
   readTime: string;
 }
 
-export const posts: BlogPost[] = [
+const hardcodedPosts: BlogPost[] = [
   {
     slug: 'ukraine-water-crisis-wash-cluster',
     title: 'Addressing the Water Crisis in Ukraine: Go Ukraina and the WASH Cluster',
@@ -71,6 +73,12 @@ export const posts: BlogPost[] = [
     `
   }
 ];
+
+const googlePosts: BlogPost[] = (googlePostsRaw as unknown as BlogPost[]) ?? [];
+
+export const posts: BlogPost[] = [...hardcodedPosts, ...googlePosts]
+  .filter((post, index, self) => self.findIndex(p => p.slug === post.slug) === index)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return posts.find((p) => p.slug === slug);
