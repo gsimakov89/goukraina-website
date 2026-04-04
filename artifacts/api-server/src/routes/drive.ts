@@ -17,24 +17,166 @@ const WEBSITE_SRC_LIB = path.resolve(
 
 const POSTS_JSON_PATH = path.join(WEBSITE_SRC_LIB, "posts-google.json");
 
+const BLOG_FOLDER_NAME = "Go Ukraina Blog Posts";
+
 function connectors() {
   return new ReplitConnectors();
+}
+
+function getInnerText(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .trim();
+}
+
+function cleanBodyHtml(html: string): string {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/\s+class="[^"]*"/gi, "")
+    .replace(/\s+id="[^"]*"/gi, "")
+    .replace(/\s+style="[^"]*"/gi, "")
+    .replace(/<span>|<\/span>/gi, "")
+    .replace(/<a\s[^>]*>/gi, "")
+    .replace(/<\/a>/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+interface ParsedMeta {
+  title: string;
+  date: string;
+  author: string;
+  excerpt: string;
+  tags: string[];
+  slug: string;
+  bodyHtml: string;
+}
+
+function parseGoogleDocHtml(htmlContent: string, fallbackName: string, fallbackDate: string): ParsedMeta {
+  const bodyMatch = htmlContent.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+  const body = bodyMatch ? bodyMatch[1] : htmlContent;
+
+  const blockRegex = /<(p|h[1-6])[^>]*>([\s\S]*?)<\/\1>/gi;
+  interface Block { text: string; startInBody: number; endInBody: number }
+  const blocks: Block[] = [];
+  let m: RegExpExecArray | null;
+
+  while ((m = blockRegex.exec(body)) !== null) {
+    const text = getInnerText(m[2]);
+    if (text.length > 0) {
+      blocks.push({ text, startInBody: m.index, endInBody: m.index + m[0].length });
+    }
+  }
+
+  const isDash = (t: string) => /^-{3,}$/.test(t.trim());
+  const firstDashIdx = blocks.findIndex((b) => isDash(b.text));
+  const secondDashIdx =
+    firstDashIdx >= 0
+      ? blocks.findIndex((b, i) => i > firstDashIdx && isDash(b.text))
+      : -1;
+
+  const rawMeta: Record<string, string> = {};
+
+  if (firstDashIdx >= 0 && secondDashIdx > firstDashIdx) {
+    for (let i = firstDashIdx + 1; i < secondDashIdx; i++) {
+      const line = blocks[i].text;
+      const colonIdx = line.indexOf(":");
+      if (colonIdx > 0) {
+        const key = line.slice(0, colonIdx).trim().toLowerCase();
+        const value = line.slice(colonIdx + 1).trim();
+        if (key && value) rawMeta[key] = value;
+      }
+    }
+  }
+
+  const bodyStartPos =
+    secondDashIdx >= 0 ? blocks[secondDashIdx].endInBody : 0;
+  const rawBodyHtml = body.slice(bodyStartPos);
+  const bodyHtml = cleanBodyHtml(rawBodyHtml);
+
+  const title = rawMeta["title"] || fallbackName;
+  const date = rawMeta["date"] || fallbackDate;
+  const author = rawMeta["author"] || "Go Ukraina";
+  const excerpt = rawMeta["excerpt"] || "";
+  const tags = rawMeta["tags"]
+    ? rawMeta["tags"].split(",").map((t) => t.trim()).filter(Boolean)
+    : [];
+  const slug =
+    rawMeta["slug"] ||
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .slice(0, 80);
+
+  return { title, date, author, excerpt, tags, slug, bodyHtml };
+}
+
+function estimateReadTime(html: string): string {
+  const words = html.replace(/<[^>]+>/g, " ").trim().split(/\s+/).length;
+  return `${Math.max(1, Math.round(words / 200))} min read`;
+}
+
+async function findBlogFolder(c: ReturnType<typeof connectors>): Promise<{ id: string } | null> {
+  const res = await c.proxy(
+    "google-drive",
+    `/drive/v3/files?fields=files(id,name)&q=${encodeURIComponent(
+      `name = '${BLOG_FOLDER_NAME}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false`
+    )}`,
+    { method: "GET" }
+  );
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.files?.[0] ?? null;
+}
+
+async function listDocsInFolder(
+  c: ReturnType<typeof connectors>,
+  folderId: string
+): Promise<Array<{ id: string; name: string; modifiedTime: string; createdTime: string }>> {
+  const q = `'${folderId}' in parents and mimeType = 'application/vnd.google-apps.document' and trashed = false`;
+  const res = await c.proxy(
+    "google-drive",
+    `/drive/v3/files?pageSize=50&fields=files(id,name,modifiedTime,createdTime)&q=${encodeURIComponent(q)}&orderBy=modifiedTime+desc`,
+    { method: "GET" }
+  );
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.files ?? [];
+}
+
+async function exportDocAsHtml(
+  c: ReturnType<typeof connectors>,
+  fileId: string
+): Promise<string> {
+  const res = await c.proxy(
+    "google-drive",
+    `/drive/v3/files/${fileId}/export?mimeType=${encodeURIComponent("text/html")}`,
+    { method: "GET" }
+  );
+  if (!res.ok) throw new Error(`Export failed: HTTP ${res.status}`);
+  return res.text();
 }
 
 router.get("/drive/files", async (req, res) => {
   try {
     const c = connectors();
-    const mimeFilter =
-      "(mimeType contains 'image/' or mimeType contains 'video/')";
+    const mimeFilter = "(mimeType contains 'image/' or mimeType contains 'video/')";
     const response = await c.proxy(
       "google-drive",
       `/drive/v3/files?pageSize=100&fields=files(id,name,mimeType,size,modifiedTime)&q=${encodeURIComponent(mimeFilter)}&orderBy=modifiedTime+desc`,
       { method: "GET" }
     );
     const data = await response.json();
-    if (data.error) {
-      return res.status(502).json({ error: data.error.message });
-    }
+    if (data.error) return res.status(502).json({ error: data.error.message });
     res.json(data.files ?? []);
   } catch (err: any) {
     res.status(500).json({ error: err.message });
@@ -69,21 +211,14 @@ router.post("/drive/download", async (req, res) => {
     const subDir = isVideo ? "videos" : "images";
     const destDir = path.join(WEBSITE_PUBLIC, subDir);
 
-    if (!fs.existsSync(destDir)) {
-      fs.mkdirSync(destDir, { recursive: true });
-    }
+    if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
 
     const safeName = fileName.replace(/[^a-zA-Z0-9._\-]/g, "_");
     const destPath = path.join(destDir, safeName);
-
     const buffer = Buffer.from(await response.arrayBuffer());
     fs.writeFileSync(destPath, buffer);
 
-    res.json({
-      success: true,
-      path: `/${subDir}/${safeName}`,
-      size: buffer.length,
-    });
+    res.json({ success: true, path: `/${subDir}/${safeName}`, size: buffer.length });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
@@ -92,190 +227,110 @@ router.post("/drive/download", async (req, res) => {
 router.get("/drive/docs", async (req, res) => {
   try {
     const c = connectors();
-    const mimeFilter = "mimeType = 'application/vnd.google-apps.document'";
-    const folderFilter = `name = 'Go Ukraina Blog Posts'`;
+    const folder = await findBlogFolder(c);
 
-    const folderRes = await c.proxy(
-      "google-drive",
-      `/drive/v3/files?fields=files(id,name)&q=${encodeURIComponent(folderFilter + " and mimeType = 'application/vnd.google-apps.folder'")}`,
-      { method: "GET" }
+    if (!folder) {
+      return res.json({
+        docs: [],
+        folderFound: false,
+        error: `Google Drive folder "${BLOG_FOLDER_NAME}" not found. Create it and add your Google Docs there.`,
+      });
+    }
+
+    const rawDocs = await listDocsInFolder(c, folder.id);
+
+    const docs: Array<{
+      id: string;
+      name: string;
+      modifiedTime: string;
+      createdTime: string;
+      meta: { title: string; date: string; author: string; excerpt: string; tags: string[]; slug: string } | null;
+      metaError: string | null;
+    }> = await Promise.all(
+      rawDocs.map(async (doc) => {
+        try {
+          const html = await exportDocAsHtml(c, doc.id);
+          const fallbackDate = doc.createdTime?.slice(0, 10) ?? new Date().toISOString().slice(0, 10);
+          const parsed = parseGoogleDocHtml(html, doc.name, fallbackDate);
+          return {
+            id: doc.id,
+            name: doc.name,
+            modifiedTime: doc.modifiedTime,
+            createdTime: doc.createdTime,
+            meta: {
+              title: parsed.title,
+              date: parsed.date,
+              author: parsed.author,
+              excerpt: parsed.excerpt,
+              tags: parsed.tags,
+              slug: parsed.slug,
+            },
+            metaError: null,
+          };
+        } catch (e: any) {
+          return {
+            id: doc.id,
+            name: doc.name,
+            modifiedTime: doc.modifiedTime,
+            createdTime: doc.createdTime,
+            meta: null,
+            metaError: e.message,
+          };
+        }
+      })
     );
-    const folderData = await folderRes.json();
-    if (folderData.error) {
-      return res.status(502).json({ error: folderData.error.message });
-    }
 
-    const folders = folderData.files ?? [];
-    let q = mimeFilter;
-    if (folders.length > 0) {
-      q += ` and '${folders[0].id}' in parents`;
-    }
-
-    const docsRes = await c.proxy(
-      "google-drive",
-      `/drive/v3/files?pageSize=50&fields=files(id,name,modifiedTime,createdTime)&q=${encodeURIComponent(q)}&orderBy=modifiedTime+desc`,
-      { method: "GET" }
-    );
-    const docsData = await docsRes.json();
-    if (docsData.error) {
-      return res.status(502).json({ error: docsData.error.message });
-    }
-
-    res.json({
-      docs: docsData.files ?? [],
-      folderFound: folders.length > 0,
-      folderName: folders[0]?.name ?? null,
-    });
+    res.json({ docs, folderFound: true });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 });
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .slice(0, 80);
-}
-
-function estimateReadTime(text: string): string {
-  const words = text.trim().split(/\s+/).length;
-  const minutes = Math.max(1, Math.round(words / 200));
-  return `${minutes} min read`;
-}
-
-function parseMetadataBlock(html: string): {
-  meta: Record<string, string>;
-  bodyHtml: string;
-} {
-  const textContent = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-  const delimPattern = /^---\s*([\s\S]*?)\s*---\s*/;
-  const match = textContent.match(delimPattern);
-
-  const meta: Record<string, string> = {};
-  let bodyHtml = html;
-
-  if (match) {
-    const block = match[1];
-    for (const line of block.split("\n")) {
-      const colonIdx = line.indexOf(":");
-      if (colonIdx > 0) {
-        const key = line.slice(0, colonIdx).trim().toLowerCase();
-        const value = line.slice(colonIdx + 1).trim();
-        meta[key] = value;
-      }
-    }
-    const afterBlock = textContent.slice(match[0].length);
-    bodyHtml = convertTextToHtml(afterBlock, html);
-  }
-
-  return { meta, bodyHtml };
-}
-
-function convertTextToHtml(plainText: string, originalHtml: string): string {
-  const bodyMatch = originalHtml.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-  if (!bodyMatch) return `<p>${plainText}</p>`;
-
-  let body = bodyMatch[1];
-
-  const delimHtml = /---[\s\S]*?---/;
-  body = body.replace(delimHtml, "");
-
-  body = body
-    .replace(/<script[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?<\/style>/gi, "")
-    .replace(/class="[^"]*"/gi, "")
-    .replace(/style="[^"]*"/gi, "")
-    .replace(/<span\s*>/gi, "")
-    .replace(/<\/span>/gi, "")
-    .replace(/<a\s[^>]*>/gi, "")
-    .replace(/<\/a>/gi, "")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  return body;
-}
-
 router.post("/drive/sync-blogs", async (req, res) => {
   try {
     const c = connectors();
+    const folder = await findBlogFolder(c);
 
-    const folderRes = await c.proxy(
-      "google-drive",
-      `/drive/v3/files?fields=files(id,name)&q=${encodeURIComponent("name = 'Go Ukraina Blog Posts' and mimeType = 'application/vnd.google-apps.folder'")}`,
-      { method: "GET" }
-    );
-    const folderData = await folderRes.json();
-    if (folderData.error) {
-      return res.status(502).json({ error: folderData.error.message });
+    if (!folder) {
+      return res.status(404).json({
+        error: `Google Drive folder "${BLOG_FOLDER_NAME}" not found. Create it and add your Google Docs there.`,
+      });
     }
 
-    const folders = folderData.files ?? [];
-    let q = "mimeType = 'application/vnd.google-apps.document'";
-    if (folders.length > 0) {
-      q += ` and '${folders[0].id}' in parents`;
-    }
-
-    const docsRes = await c.proxy(
-      "google-drive",
-      `/drive/v3/files?pageSize=50&fields=files(id,name,modifiedTime,createdTime)&q=${encodeURIComponent(q)}&orderBy=modifiedTime+desc`,
-      { method: "GET" }
-    );
-    const docsData = await docsRes.json();
-    if (docsData.error) {
-      return res.status(502).json({ error: docsData.error.message });
-    }
-
-    const docs = docsData.files ?? [];
-    const posts: any[] = [];
+    const rawDocs = await listDocsInFolder(c, folder.id);
+    const posts: Array<{
+      slug: string;
+      title: string;
+      date: string;
+      author: string;
+      excerpt: string;
+      content: string;
+      tags: string[];
+      readTime: string;
+      _driveId: string;
+      _driveName: string;
+    }> = [];
     const errors: string[] = [];
 
-    for (const doc of docs) {
+    for (const doc of rawDocs) {
       try {
-        const exportRes = await c.proxy(
-          "google-drive",
-          `/drive/v3/files/${doc.id}/export?mimeType=${encodeURIComponent("text/html")}`,
-          { method: "GET" }
-        );
-
-        if (!exportRes.ok) {
-          errors.push(`${doc.name}: export failed (${exportRes.status})`);
-          continue;
-        }
-
-        const htmlContent = await exportRes.text();
-        const { meta, bodyHtml } = parseMetadataBlock(htmlContent);
-
-        const title = meta.title || doc.name;
-        const date =
-          meta.date ||
-          (doc.createdTime ? doc.createdTime.slice(0, 10) : new Date().toISOString().slice(0, 10));
-        const author = meta.author || "Go Ukraina";
-        const tags = meta.tags
-          ? meta.tags.split(",").map((t: string) => t.trim()).filter(Boolean)
-          : [];
-        const excerpt = meta.excerpt || "";
-        const slug = meta.slug || slugify(title);
-        const plainText = bodyHtml.replace(/<[^>]+>/g, " ");
-        const readTime = estimateReadTime(plainText);
-
+        const html = await exportDocAsHtml(c, doc.id);
+        const fallbackDate = doc.createdTime?.slice(0, 10) ?? new Date().toISOString().slice(0, 10);
+        const parsed = parseGoogleDocHtml(html, doc.name, fallbackDate);
         posts.push({
-          slug,
-          title,
-          date,
-          author,
-          excerpt,
-          content: bodyHtml,
-          tags,
-          readTime,
+          slug: parsed.slug,
+          title: parsed.title,
+          date: parsed.date,
+          author: parsed.author,
+          excerpt: parsed.excerpt,
+          content: parsed.bodyHtml,
+          tags: parsed.tags,
+          readTime: estimateReadTime(parsed.bodyHtml),
           _driveId: doc.id,
           _driveName: doc.name,
         });
-      } catch (docErr: any) {
-        errors.push(`${doc.name}: ${docErr.message}`);
+      } catch (e: any) {
+        errors.push(`${doc.name}: ${e.message}`);
       }
     }
 
@@ -297,9 +352,7 @@ router.post("/drive/sync-blogs", async (req, res) => {
 
 router.get("/drive/synced-posts", async (req, res) => {
   try {
-    if (!fs.existsSync(POSTS_JSON_PATH)) {
-      return res.json([]);
-    }
+    if (!fs.existsSync(POSTS_JSON_PATH)) return res.json([]);
     const data = JSON.parse(fs.readFileSync(POSTS_JSON_PATH, "utf-8"));
     res.json(data);
   } catch (err: any) {

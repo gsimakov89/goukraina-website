@@ -1,11 +1,25 @@
 import { useState, useEffect } from "react";
-import { FileText, RefreshCw, Loader2, CheckCircle2, AlertCircle, FolderOpen, Rss } from "lucide-react";
+import {
+  FileText, RefreshCw, Loader2, CheckCircle2, AlertCircle,
+  FolderOpen, Rss, Tag, Calendar, User,
+} from "lucide-react";
+
+interface DocMeta {
+  title: string;
+  date: string;
+  author: string;
+  excerpt: string;
+  tags: string[];
+  slug: string;
+}
 
 interface DriveDoc {
   id: string;
   name: string;
-  modifiedTime?: string;
-  createdTime?: string;
+  modifiedTime: string;
+  createdTime: string;
+  meta: DocMeta | null;
+  metaError: string | null;
 }
 
 interface SyncedPost {
@@ -22,7 +36,7 @@ interface SyncedPost {
 interface DocsResponse {
   docs: DriveDoc[];
   folderFound: boolean;
-  folderName: string | null;
+  error?: string;
 }
 
 interface SyncResult {
@@ -45,7 +59,8 @@ function formatDate(iso?: string) {
 
 export default function BlogSync() {
   const [docs, setDocs] = useState<DriveDoc[]>([]);
-  const [folderFound, setFolderFound] = useState(false);
+  const [folderFound, setFolderFound] = useState<boolean | null>(null);
+  const [folderError, setFolderError] = useState<string | null>(null);
   const [loadingDocs, setLoadingDocs] = useState(true);
   const [docsError, setDocsError] = useState<string | null>(null);
 
@@ -58,13 +73,19 @@ export default function BlogSync() {
   const fetchDocs = async () => {
     setLoadingDocs(true);
     setDocsError(null);
+    setFolderError(null);
     try {
       const res = await fetch(`${API_BASE}/drive/docs`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data: DocsResponse = await res.json();
-      if ((data as any).error) throw new Error((data as any).error);
-      setDocs(data.docs);
-      setFolderFound(data.folderFound);
+      if ((data as any).error && !(data as any).folderFound) {
+        setFolderError((data as any).error);
+        setFolderFound(false);
+        setDocs([]);
+      } else {
+        setDocs(data.docs ?? []);
+        setFolderFound(data.folderFound);
+      }
     } catch (e: any) {
       setDocsError(e.message);
     } finally {
@@ -76,10 +97,8 @@ export default function BlogSync() {
     try {
       const res = await fetch(`${API_BASE}/drive/synced-posts`);
       if (!res.ok) return;
-      const data = await res.json();
-      setSyncedPosts(data);
-    } catch {
-    }
+      setSyncedPosts(await res.json());
+    } catch {}
   };
 
   useEffect(() => {
@@ -93,9 +112,9 @@ export default function BlogSync() {
     setSyncError(null);
     try {
       const res = await fetch(`${API_BASE}/drive/sync-blogs`, { method: "POST" });
-      const data: SyncResult = await res.json();
+      const data: SyncResult & { error?: string } = await res.json();
       if (!res.ok || !data.success) {
-        setSyncError((data as any).error ?? "Sync failed");
+        setSyncError(data.error ?? "Sync failed");
       } else {
         setSyncResult(data);
         fetchSyncedPosts();
@@ -117,15 +136,18 @@ export default function BlogSync() {
             <h1 className="font-display text-4xl font-bold text-foreground">Blog Sync</h1>
           </div>
           <p className="text-muted-foreground max-w-2xl">
-            Write blog posts as Google Docs inside the <strong>"Go Ukraina Blog Posts"</strong> folder
-            in your connected Google Drive, then click <strong>Sync All Posts</strong> to pull
-            them into the website. After syncing, redeploy to Vercel to publish.
+            Write blog posts as Google Docs in the{" "}
+            <strong>"Go Ukraina Blog Posts"</strong> folder in your connected Google Drive.
+            Click <strong>Sync All Posts</strong> to pull them in, then redeploy to Vercel to publish.
           </p>
         </div>
 
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8 text-sm text-blue-900">
           <p className="font-semibold mb-1">How to format a post</p>
-          <p className="mb-2">Start each Google Doc with a metadata block, then write your content below it:</p>
+          <p className="mb-2">
+            Start each Google Doc with a metadata block (three dashes, fields, three dashes),
+            then write your content below:
+          </p>
           <pre className="bg-white rounded-lg p-3 text-xs font-mono text-blue-800 whitespace-pre-wrap">{`---
 title: My Blog Post Title
 date: 2025-04-04
@@ -134,107 +156,117 @@ tags: water, Ukraine, humanitarian
 excerpt: A one-sentence summary shown on the blog listing page.
 ---
 
-The body of your post goes here. Write as many paragraphs as you like.`}</pre>
+The body of your post goes here. Write as many paragraphs as you like.
+
+Use headings to break up sections.`}</pre>
           <p className="mt-2 text-blue-700">
-            All fields except <code>title</code> are optional. If <code>date</code> is omitted,
-            the document creation date is used.
+            Only <code>title</code> is required. If <code>date</code> is omitted, the document
+            creation date is used. The <code>---</code> separators must each be on their own line.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <section className="bg-background rounded-2xl border border-border p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-semibold text-lg text-foreground flex items-center gap-2">
-                <FolderOpen className="w-5 h-5 text-primary" />
-                Docs in Drive Folder
-              </h2>
-              <button
-                onClick={fetchDocs}
-                disabled={loadingDocs}
-                className="flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-border hover:bg-muted transition-colors"
-              >
-                <RefreshCw className={`w-3.5 h-3.5 ${loadingDocs ? "animate-spin" : ""}`} />
-                Refresh
-              </button>
-            </div>
-
-            {!folderFound && !loadingDocs && !docsError && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800 text-sm mb-4">
-                <strong>Folder not found.</strong> Create a folder named exactly{" "}
-                <strong>"Go Ukraina Blog Posts"</strong> in your Google Drive and add your docs there.
-              </div>
-            )}
-
-            {loadingDocs && (
-              <div className="flex items-center gap-2 text-muted-foreground py-6">
-                <Loader2 className="w-5 h-5 animate-spin" />
-                Loading from Google Drive…
-              </div>
-            )}
-
-            {docsError && (
-              <div className="flex items-start gap-2 text-red-700 bg-red-50 rounded-lg p-4 text-sm">
-                <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
-                <span>{docsError}</span>
-              </div>
-            )}
-
-            {!loadingDocs && !docsError && docs.length === 0 && (
-              <p className="text-muted-foreground text-sm py-4">
-                No Google Docs found in the folder yet.
-              </p>
-            )}
-
-            <ul className="space-y-3">
-              {docs.map((doc) => (
-                <li key={doc.id} className="flex items-start gap-3">
-                  <FileText className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{doc.name}</p>
-                    <p className="text-xs text-muted-foreground">
-                      Last modified: {formatDate(doc.modifiedTime)}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="bg-background rounded-2xl border border-border p-6">
-            <h2 className="font-semibold text-lg text-foreground flex items-center gap-2 mb-4">
-              <CheckCircle2 className="w-5 h-5 text-green-600" />
-              Currently Synced Posts
+        <section className="bg-background rounded-2xl border border-border p-6 mb-8">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="font-semibold text-lg text-foreground flex items-center gap-2">
+              <FolderOpen className="w-5 h-5 text-primary" />
+              Google Docs in Drive Folder
             </h2>
+            <button
+              onClick={fetchDocs}
+              disabled={loadingDocs}
+              className="flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-border hover:bg-muted transition-colors"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loadingDocs ? "animate-spin" : ""}`} />
+              Refresh
+            </button>
+          </div>
 
-            {syncedPosts.length === 0 ? (
-              <p className="text-muted-foreground text-sm py-4">
-                No posts synced yet. Click "Sync All Posts" to pull from Drive.
-              </p>
-            ) : (
-              <ul className="space-y-3">
-                {syncedPosts.map((post) => (
-                  <li key={post.slug} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-sm font-medium text-foreground">{post.title}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {post.date} · {post.author} · {post.readTime}
-                      </p>
-                      {post.excerpt && (
-                        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{post.excerpt}</p>
-                      )}
+          {loadingDocs && (
+            <div className="flex items-center gap-2 text-muted-foreground py-8">
+              <Loader2 className="w-5 h-5 animate-spin" />
+              Loading from Google Drive (fetching metadata for each doc…)
+            </div>
+          )}
+
+          {!loadingDocs && folderFound === false && (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800 text-sm">
+              <strong>Folder not found.</strong>{" "}
+              {folderError ?? `Create a folder named exactly "${`Go Ukraina Blog Posts`}" in your Google Drive and add your docs there.`}
+            </div>
+          )}
+
+          {!loadingDocs && docsError && (
+            <div className="flex items-start gap-2 text-red-700 bg-red-50 rounded-lg p-4 text-sm">
+              <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+              <span>{docsError}</span>
+            </div>
+          )}
+
+          {!loadingDocs && folderFound && docs.length === 0 && (
+            <p className="text-muted-foreground text-sm py-4">
+              No Google Docs found in the folder. Add docs to <strong>"Go Ukraina Blog Posts"</strong>.
+            </p>
+          )}
+
+          {!loadingDocs && docs.length > 0 && (
+            <div className="space-y-4">
+              {docs.map((doc) => (
+                <div key={doc.id} className="border border-border rounded-xl p-4">
+                  {doc.meta ? (
+                    <>
+                      <div className="flex items-start gap-3 mb-2">
+                        <FileText className="w-4 h-4 text-primary mt-1 shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-foreground">{doc.meta.title}</p>
+                          <div className="flex flex-wrap gap-3 mt-1 text-xs text-muted-foreground">
+                            <span className="flex items-center gap-1">
+                              <Calendar className="w-3 h-3" /> {doc.meta.date}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <User className="w-3 h-3" /> {doc.meta.author}
+                            </span>
+                            {doc.meta.tags.length > 0 && (
+                              <span className="flex items-center gap-1">
+                                <Tag className="w-3 h-3" />
+                                {doc.meta.tags.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                          {doc.meta.excerpt && (
+                            <p className="text-sm text-muted-foreground mt-1.5 line-clamp-2 italic">
+                              "{doc.meta.excerpt}"
+                            </p>
+                          )}
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Drive file: <span className="font-mono">{doc.name}</span> · Last modified: {formatDate(doc.modifiedTime)}
+                          </p>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex items-start gap-3">
+                      <FileText className="w-4 h-4 text-muted-foreground mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{doc.name}</p>
+                        <p className="text-xs text-amber-600 mt-0.5">
+                          Could not parse metadata: {doc.metaError ?? "unknown error"}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          Make sure the doc starts with a <code>---</code> metadata block.
+                        </p>
+                      </div>
                     </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </section>
-        </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
 
-        <div className="flex flex-col items-start gap-4">
+        <div className="flex flex-col items-start gap-4 mb-10">
           <button
             onClick={syncAll}
-            disabled={syncing || loadingDocs}
+            disabled={syncing || loadingDocs || folderFound === false}
             className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold text-base hover:bg-primary/90 disabled:opacity-60 transition-colors shadow-sm"
           >
             {syncing ? (
@@ -277,12 +309,36 @@ The body of your post goes here. Write as many paragraphs as you like.`}</pre>
           {syncError && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-5 w-full flex items-start gap-3 text-red-700">
               <AlertCircle className="w-5 h-5 mt-0.5 shrink-0" />
-              <div>
-                <strong>Sync failed:</strong> {syncError}
-              </div>
+              <div><strong>Sync failed:</strong> {syncError}</div>
             </div>
           )}
         </div>
+
+        {syncedPosts.length > 0 && (
+          <section className="bg-background rounded-2xl border border-border p-6">
+            <h2 className="font-semibold text-lg text-foreground flex items-center gap-2 mb-4">
+              <CheckCircle2 className="w-5 h-5 text-green-600" />
+              Currently Synced Posts ({syncedPosts.length})
+            </h2>
+            <ul className="space-y-3">
+              {syncedPosts.map((post) => (
+                <li key={post.slug} className="flex items-start gap-3 border-b border-border last:border-0 pb-3 last:pb-0">
+                  <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{post.title}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {post.date} · {post.author} · {post.readTime}
+                      {post.tags?.length > 0 && ` · ${post.tags.join(", ")}`}
+                    </p>
+                    {post.excerpt && (
+                      <p className="text-xs text-muted-foreground mt-0.5 italic">"{post.excerpt}"</p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     </div>
   );
