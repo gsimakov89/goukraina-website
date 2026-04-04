@@ -74,7 +74,22 @@ const hardcodedPosts: BlogPost[] = [
   }
 ];
 
-const googlePosts: BlogPost[] = (googlePostsRaw as unknown as BlogPost[]) ?? [];
+function isValidPost(p: unknown): p is BlogPost {
+  if (!p || typeof p !== "object") return false;
+  const o = p as Record<string, unknown>;
+  return (
+    typeof o.slug === "string" &&
+    typeof o.title === "string" &&
+    typeof o.date === "string" &&
+    typeof o.author === "string" &&
+    typeof o.content === "string" &&
+    Array.isArray(o.tags)
+  );
+}
+
+const googlePosts: BlogPost[] = Array.isArray(googlePostsRaw)
+  ? googlePostsRaw.filter(isValidPost)
+  : [];
 
 export const posts: BlogPost[] = [...hardcodedPosts, ...googlePosts]
   .filter((post, index, self) => self.findIndex(p => p.slug === post.slug) === index)

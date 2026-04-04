@@ -11,8 +11,6 @@ const WEBSITE_PUBLIC = path.resolve(__dirname, "../../goukraina-website/public")
 const WEBSITE_SRC_LIB = path.resolve(__dirname, "../../goukraina-website/src/lib");
 const POSTS_JSON_PATH = path.join(WEBSITE_SRC_LIB, "posts-google.json");
 
-console.log("[drive] WEBSITE_SRC_LIB resolved to:", WEBSITE_SRC_LIB);
-
 const BLOG_FOLDER_NAME = "Go Ukraina Blog Posts";
 
 function connectors() {
@@ -333,7 +331,16 @@ router.post("/drive/sync-blogs", async (req, res) => {
     if (!fs.existsSync(WEBSITE_SRC_LIB)) {
       fs.mkdirSync(WEBSITE_SRC_LIB, { recursive: true });
     }
-    console.log("[sync-blogs] Writing", posts.length, "posts to:", POSTS_JSON_PATH);
+    const slugSeen = new Set<string>();
+    const duplicateSlugs: string[] = [];
+    for (const p of posts) {
+      if (slugSeen.has(p.slug)) duplicateSlugs.push(p.slug);
+      else slugSeen.add(p.slug);
+    }
+    if (duplicateSlugs.length > 0) {
+      errors.push(`Duplicate slugs detected (last doc wins): ${duplicateSlugs.join(", ")}`);
+    }
+
     fs.writeFileSync(POSTS_JSON_PATH, JSON.stringify(posts, null, 2), "utf-8");
 
     res.json({
