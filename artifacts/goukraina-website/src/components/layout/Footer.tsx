@@ -61,7 +61,8 @@ export default function Footer() {
           <div>
             <h3 className="font-display font-bold text-lg mb-6">Contact & Legal</h3>
             <ul className="space-y-4 text-sm text-gray-400">
-              <li>Los Angeles, California 90001</li>
+              <li>4500 Park Granada Suite 202
+              Calabasas, CA 91302</li>
               <li><a href="tel:+13235326855" className="hover:text-white transition-colors">+1 (323) 532-6855</a></li>
               <li><a href="mailto:info@goukraina.com" className="hover:text-white transition-colors">info@goukraina.com</a></li>
             </ul>
