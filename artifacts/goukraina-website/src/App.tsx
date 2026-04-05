@@ -20,7 +20,6 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Donate from "@/pages/Donate";
 import Impact from "@/pages/Impact";
-import Events from "@/pages/Events";
 import Contact from "@/pages/Contact";
 import DriveImporter from "@/pages/DriveImporter";
 import BlogSync from "@/pages/admin/BlogSync";
@@ -63,7 +62,6 @@ function Router() {
           
           <Route path="/donate" component={Donate} />
           <Route path="/impact" component={Impact} />
-          <Route path="/events" component={Events} />
           <Route path="/contact" component={Contact} />
           <Route path="/admin/drive" component={DriveImporter} />
           <Route path="/admin/blog-sync" component={BlogSync} />

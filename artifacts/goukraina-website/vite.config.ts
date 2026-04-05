@@ -73,11 +73,6 @@ const ROUTES: Record<string, { title: string; description: string }> = {
     description:
       "See the measurable impact of Go Ukraina's work — water stations deployed, generators distributed, and lives changed in Ukraine.",
   },
-  "/events": {
-    title: "Events | Go Ukraina",
-    description:
-      "Upcoming events, fundraisers, and policy briefings hosted by Go Ukraina to support humanitarian efforts in Ukraine.",
-  },
   "/contact": {
     title: "Contact Us | Go Ukraina",
     description:
