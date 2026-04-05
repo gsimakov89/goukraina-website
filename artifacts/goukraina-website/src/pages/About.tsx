@@ -56,7 +56,7 @@ export default function About() {
                 ))}
               </ul>
             </div>
-            <div className="rounded-3xl overflow-hidden shadow-2xl">
+            <div className="rounded-3xl overflow-hidden shadow-2xl aspect-video bg-muted">
               <video
                 ref={videoRef}
                 src="/videos/URS_2025_web.mp4"
@@ -65,7 +65,7 @@ export default function About() {
                 loop
                 playsInline
                 preload="auto"
-                className="w-full h-auto object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
