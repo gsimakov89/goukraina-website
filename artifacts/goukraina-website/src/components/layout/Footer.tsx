@@ -76,7 +76,7 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
           <p>© {new Date().getFullYear()} Go Ukraina Inc. All Rights Reserved.</p>
           <div className="flex flex-wrap items-center gap-4">
-            <span>EIN: Available upon request</span>
+            <span>EIN: 88-2011390</span>
             <Link href="/" className="hover:text-gray-300">Privacy Policy</Link>
             <Link href="/" className="hover:text-gray-300">Terms of Service</Link>
           </div>
