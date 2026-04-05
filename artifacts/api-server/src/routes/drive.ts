@@ -50,6 +50,7 @@ interface ParsedMeta {
   tags: string[];
   slug: string;
   bodyHtml: string;
+  image?: string;
 }
 
 function parseGoogleDocHtml(htmlContent: string, fallbackName: string, fallbackDate: string): ParsedMeta {
@@ -111,7 +112,12 @@ function parseGoogleDocHtml(htmlContent: string, fallbackName: string, fallbackD
       .replace(/-+/g, "-")
       .slice(0, 80);
 
-  return { title, date, author, excerpt, tags, slug, bodyHtml };
+  // Explicit image from metadata block, or first inline <img> in the body HTML
+  const metaImage = rawMeta["image"] || undefined;
+  const bodyImgMatch = bodyHtml.match(/<img[^>]+src=["']([^"']+)["']/i);
+  const image = metaImage || (bodyImgMatch ? bodyImgMatch[1] : undefined);
+
+  return { title, date, author, excerpt, tags, slug, bodyHtml, image };
 }
 
 function estimateReadTime(html: string): string {
@@ -301,6 +307,7 @@ router.post("/drive/sync-blogs", async (req, res) => {
       content: string;
       tags: string[];
       readTime: string;
+      image?: string;
       _driveId: string;
       _driveName: string;
     }> = [];
@@ -320,6 +327,7 @@ router.post("/drive/sync-blogs", async (req, res) => {
           content: parsed.bodyHtml,
           tags: parsed.tags,
           readTime: estimateReadTime(parsed.bodyHtml),
+          ...(parsed.image ? { image: parsed.image } : {}),
           _driveId: doc.id,
           _driveName: doc.name,
         });
