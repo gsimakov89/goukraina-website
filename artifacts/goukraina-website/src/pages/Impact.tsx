@@ -71,12 +71,13 @@ export default function Impact() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-3xl font-bold mb-10 text-center">Our Trusted Partners</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             {[
               { src: "/images/partners/ombudsman.png", alt: "Office of the Ombudsman of Ukraine" },
               { src: "/images/partners/consulate-sf.jpg", alt: "Ukrainian Consulate San Francisco" },
               { src: "/images/partners/reua.png", alt: "REUA — Rebuild Our Ukraine" },
               { src: "/images/partners/partner-4.png", alt: "Partner organization" },
+              { src: "/images/partners/urs-logo.png", alt: "Ukraine Reconstruction Summit" },
             ].map((p) => (
               <div key={p.src} className="flex items-center justify-center p-6 rounded-2xl bg-muted/40 border border-border hover:shadow-md transition-shadow">
                 <img
