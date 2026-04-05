@@ -105,7 +105,7 @@ export default function About() {
               <img
                 src="/images/adrien-tompert.jpg"
                 alt="Adrien Tompert, Program Development Associate at Go Ukraina"
-                className="w-40 h-40 rounded-full mx-auto mb-6 object-cover object-top ml-[33px] mt-[0px] pl-[10px] pr-[10px] pt-[2px] pb-[2px]"
+                className="w-40 h-40 rounded-full mx-auto mb-6 object-cover object-top mt-[0px] pl-[10px] pr-[10px] pt-[2px] pb-[2px] ml-[140px]"
                 loading="lazy"
               />
               <h3 className="font-display text-xl font-bold mb-1">Adrien Tompert</h3>
