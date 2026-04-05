@@ -98,7 +98,7 @@ export default function About() {
                 loading="lazy"
               />
               <h3 className="font-display text-xl font-bold mb-1">Olena Simakovski</h3>
-              <p className="text-primary font-semibold mb-3 text-sm">Co-Chairman</p>
+              <p className="text-primary font-semibold mb-3 text-sm">Executive Director & Co-founder</p>
               <p className="text-sm text-gray-400 px-2">Leading advocacy, fundraising initiatives, and the organization of the Ukraine Reconstruction Summit.</p>
             </div>
             <div className="text-center">
