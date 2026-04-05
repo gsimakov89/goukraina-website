@@ -14,9 +14,10 @@ export default function Donate() {
         <div className="max-w-3xl mx-auto px-4">
           <Heart className="w-12 h-12 text-accent mx-auto mb-6" fill="currentColor" />
           <h1 className="font-display text-5xl font-bold mb-6">Fund Ukraine's Recovery</h1>
-          <p className="text-xl text-white/80 font-light">
+          <p className="text-xl text-white/80 font-light mb-10">
             100% of your tax-deductible donation goes directly to our on-the-ground programs.
           </p>
+          <givebutter-widget id="gk3bXg"></givebutter-widget>
         </div>
       </section>
 
