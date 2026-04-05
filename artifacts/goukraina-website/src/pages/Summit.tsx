@@ -9,8 +9,9 @@ export default function Summit() {
   return (
     <div className="w-full pt-20">
       <PageMeta 
-        title="Ukraine Reconstruction Summit" 
-        description="Join investors, policymakers, and NGO leaders at the premier Ukraine investment summit: From War to Renaissance." 
+        title="Ukraine Reconstruction Summit"
+        description="Join investors, policymakers, and NGO leaders at the premier Ukraine investment summit: From War to Renaissance."
+        path="/summit"
       />
       <EventSchema 
         name="Ukraine Reconstruction Summit 2026"

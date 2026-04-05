@@ -18,6 +18,7 @@ export default function Advocacy() {
       <PageMeta
         title="Advocacy — Human Rights & Humanitarian Policy"
         description="Go Ukraina partners with the Office of the Ukrainian Parliament Commissioner for Human Rights to advocate for Ukrainian POWs, abducted children, and civilian protection."
+        path="/initiatives/advocacy"
         type="article"
       />
       <ArticleSchema

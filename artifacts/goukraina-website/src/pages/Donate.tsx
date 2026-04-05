@@ -5,8 +5,9 @@ export default function Donate() {
   return (
     <div className="w-full pt-20">
       <PageMeta
-        title="Donate"
-        description="Fund Ukraine's recovery. Make a tax-deductible donation to support clean water, power, and shelter programs."
+        title="Donate to Ukraine Relief"
+        description="Make a tax-deductible donation to Go Ukraina. Your gift funds clean water stations, emergency power, and humanitarian programs for war-affected Ukrainians."
+        path="/donate"
       />
 
       {/* Hero */}

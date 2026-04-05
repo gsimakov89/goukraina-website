@@ -9,7 +9,7 @@ const basePath = process.env.BASE_PATH || "/";
 
 const ROUTES: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "Go Ukraina — Clean Water, Power & Hope for Ukraine",
+    title: "Ukraine Humanitarian Aid & Reconstruction | Go Ukraina",
     description:
       "Go Ukraina is a Los Angeles-based 501(c)(3) nonprofit delivering essential aid, clean water, and rebuilding infrastructure in war-affected Ukraine.",
   },
@@ -24,9 +24,9 @@ const ROUTES: Record<string, { title: string; description: string }> = {
       "Deploying solar-powered reverse osmosis water stations to communities across Ukraine that have lost access to clean water.",
   },
   "/initiatives/power-generators": {
-    title: "Power Generators Initiative | Go Ukraina",
+    title: "Emergency Power Generators for Ukraine | Go Ukraina",
     description:
-      "Supplying critical backup power generators to hospitals, schools, and heating centers during grid blackouts in Ukraine.",
+      "Go Ukraina delivers emergency backup power generators to hospitals, schools, and heating centers in war-affected Ukraine. Help keep critical infrastructure running.",
   },
   "/initiatives/advocacy": {
     title: "Advocacy — Human Rights & Humanitarian Policy | Go Ukraina",
@@ -34,9 +34,9 @@ const ROUTES: Record<string, { title: string; description: string }> = {
       "Go Ukraina partners with the Ukrainian Ombudsman for Human Rights to advocate for Ukrainian POWs, abducted children, and civilian protection.",
   },
   "/initiatives/ukraine-dreamzzz": {
-    title: "Ukraine Dreamzzz Initiative | Go Ukraina",
+    title: "Ukraine Dreamzzz | Go Ukraina",
     description:
-      "Restoring hope for Ukrainian children displaced by war through education, shelter, and emotional support programs.",
+      "Ukraine Dreamzzz supports young Ukrainian combat sports athletes in boxing, MMA, and kickboxing with professional training, housing, and competition opportunities in the USA.",
   },
   "/summit": {
     title: "Ukrainian Reconstruction Summit | Go Ukraina",
@@ -44,9 +44,9 @@ const ROUTES: Record<string, { title: string; description: string }> = {
       "The Ukrainian Reconstruction Summit brings together leaders, donors, and organizations to coordinate humanitarian aid and reconstruction efforts.",
   },
   "/blog": {
-    title: "Blog | Go Ukraina",
+    title: "Blog & Field Reports | Go Ukraina",
     description:
-      "Updates, stories, and insights from Go Ukraina's humanitarian work in Ukraine.",
+      "Updates, news, and reports from the field on Go Ukraina's humanitarian projects in Ukraine.",
   },
   "/blog/ukraine-water-crisis-wash-cluster": {
     title: "Addressing the Water Crisis in Ukraine | Go Ukraina Blog",
@@ -64,14 +64,14 @@ const ROUTES: Record<string, { title: string; description: string }> = {
       "How Go Ukraina is restoring clean water access to communities devastated by the conflict in Ukraine.",
   },
   "/donate": {
-    title: "Donate | Go Ukraina",
+    title: "Donate to Ukraine Relief | Go Ukraina",
     description:
-      "Support Go Ukraina's humanitarian mission. Your donation delivers clean water, power, and hope to communities in Ukraine.",
+      "Make a tax-deductible donation to Go Ukraina. Your gift funds clean water stations, emergency power, and humanitarian programs for war-affected Ukrainians.",
   },
   "/impact": {
-    title: "Our Impact | Go Ukraina",
+    title: "Transparency & Impact | Go Ukraina",
     description:
-      "See the measurable impact of Go Ukraina's work — water stations deployed, generators distributed, and lives changed in Ukraine.",
+      "See exactly where your donation goes. View our impact dashboard, financial transparency reports, and 501(c)(3) status for Go Ukraina.",
   },
   "/contact": {
     title: "Contact Us | Go Ukraina",

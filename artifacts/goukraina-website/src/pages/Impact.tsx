@@ -12,8 +12,9 @@ export default function Impact() {
   return (
     <div className="w-full pt-20">
       <PageMeta 
-        title="Transparency & Impact" 
-        description="See exactly where your donation goes. View our impact dashboard, financial transparency, and 501(c)(3) status." 
+        title="Transparency & Impact"
+        description="See exactly where your donation goes. View our impact dashboard, financial transparency reports, and 501(c)(3) status for Go Ukraina."
+        path="/impact"
       />
 
       <section className="py-24 bg-muted/30">

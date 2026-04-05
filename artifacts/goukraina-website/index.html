@@ -50,34 +50,62 @@
     <!-- Givebutter Widgets -->
     <script async src="https://widgets.givebutter.com/latest.umd.cjs?acct=HneqIckEv5z1FV3R&p=webflow"></script>
 
-    <!-- Fonts -->
+    <!-- Fonts (async to avoid render-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Sans+3:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Sans+3:ital,wght@0,300..900;1,300..900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Sans+3:ital,wght@0,300..900;1,300..900&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Sans+3:ital,wght@0,300..900;1,300..900&display=swap" /></noscript>
 
-    <!-- JSON-LD: Organization (fallback for non-JS crawlers) -->
+    <!-- JSON-LD: WebSite + Organization (fallback for non-JS crawlers) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": ["NGO", "NonprofitOrganization"],
-      "name": "Go Ukraina Inc.",
-      "url": "https://www.goukraina.org",
-      "logo": "https://www.goukraina.org/images/logo.png",
-      "description": "Go Ukraina is a Los Angeles-based 501(c)(3) humanitarian nonprofit delivering essential aid, clean water solutions, and infrastructure rebuilding in war-affected Ukraine.",
-      "foundingDate": "2022",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Los Angeles",
-        "addressRegion": "CA",
-        "addressCountry": "US"
-      },
-      "telephone": "+13235326855",
-      "email": "info@goukraina.com",
-      "sameAs": [
-        "https://www.instagram.com/goukraina/",
-        "https://www.facebook.com/go.ukraina.inc/",
-        "https://www.linkedin.com/company/go-ukraine-inc",
-        "https://www.youtube.com/@goukrainafund"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.goukraina.org/#website",
+          "url": "https://www.goukraina.org",
+          "name": "Go Ukraina",
+          "description": "Los Angeles-based 501(c)(3) humanitarian nonprofit delivering clean water, emergency power, and reconstruction aid to war-affected Ukraine.",
+          "inLanguage": "en-US",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://www.goukraina.org/blog?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": ["NGO", "NonprofitOrganization"],
+          "@id": "https://www.goukraina.org/#organization",
+          "name": "Go Ukraina Inc.",
+          "url": "https://www.goukraina.org",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.goukraina.org/images/logo.png",
+            "width": 200,
+            "height": 60
+          },
+          "description": "Go Ukraina is a Los Angeles-based 501(c)(3) humanitarian nonprofit delivering essential aid, clean water solutions, and infrastructure rebuilding in war-affected Ukraine.",
+          "foundingDate": "2022",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Los Angeles",
+            "addressRegion": "CA",
+            "addressCountry": "US"
+          },
+          "telephone": "+13235326855",
+          "email": "info@goukraina.com",
+          "sameAs": [
+            "https://www.instagram.com/goukraina/",
+            "https://www.facebook.com/go.ukraina.inc/",
+            "https://www.linkedin.com/company/go-ukraine-inc",
+            "https://www.youtube.com/@goukrainafund"
+          ]
+        }
       ]
     }
     </script>

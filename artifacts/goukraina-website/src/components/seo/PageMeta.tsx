@@ -17,7 +17,8 @@ export default function PageMeta({
 }: PageMetaProps) {
   const siteUrl = "https://www.goukraina.org";
   const canonicalUrl = `${siteUrl}${path}`;
-  const fullTitle = `${title} | Go Ukraina | Ukraine Humanitarian Aid`;
+  const fullTitle = `${title} | Go Ukraina`;
+  const imageUrl = `${siteUrl}${image}`;
 
   return (
     <Helmet>
@@ -29,12 +30,17 @@ export default function PageMeta({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:type" content={type} />
-      <meta property="og:image" content={`${siteUrl}${image}`} />
+      <meta property="og:image" content={imageUrl} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:site_name" content="Go Ukraina" />
+      <meta property="og:locale" content="en_US" />
 
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@goukraina" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={`${siteUrl}${image}`} />
+      <meta name="twitter:image" content={imageUrl} />
     </Helmet>
   );
 }

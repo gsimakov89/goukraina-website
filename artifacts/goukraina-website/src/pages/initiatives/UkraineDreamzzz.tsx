@@ -3,7 +3,11 @@ import PageMeta from "@/components/seo/PageMeta";
 export default function UkraineDreamzzz() {
   return (
     <div className="w-full pt-20">
-      <PageMeta title="Ukraine Dreamzzz" description="Youth program bringing comfort and psychological relief to children affected by war." />
+      <PageMeta
+        title="Ukraine Dreamzzz"
+        description="Ukraine Dreamzzz supports young Ukrainian combat sports athletes in boxing, MMA, and kickboxing with professional training, housing, and competition opportunities in the USA."
+        path="/initiatives/ukraine-dreamzzz"
+      />
       
       <section className="py-24 bg-accent/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">

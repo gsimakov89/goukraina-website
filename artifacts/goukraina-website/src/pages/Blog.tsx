@@ -6,8 +6,9 @@ export default function Blog() {
   return (
     <div className="w-full pt-20">
       <PageMeta 
-        title="Blog & Field Reports" 
-        description="Updates, news, and reports from the field on Go Ukraina's humanitarian projects in Ukraine." 
+        title="Blog & Field Reports"
+        description="Updates, news, and reports from the field on Go Ukraina's humanitarian projects in Ukraine."
+        path="/blog"
       />
 
       <section className="py-24 bg-muted/30 border-b border-border">

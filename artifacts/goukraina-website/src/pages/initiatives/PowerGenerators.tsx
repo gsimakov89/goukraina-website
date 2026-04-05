@@ -6,7 +6,11 @@ import GivebutterButton from "@/components/GivebutterButton";
 export default function PowerGenerators() {
   return (
     <div className="w-full pt-20">
-      <PageMeta title="Power Generators" description="Providing critical backup power to hospitals, schools, and heating centers in Ukraine." />
+      <PageMeta
+        title="Emergency Power Generators for Ukraine"
+        description="Go Ukraina delivers emergency backup power generators to hospitals, schools, and heating centers in war-affected Ukraine. Help keep critical infrastructure running."
+        path="/initiatives/power-generators"
+      />
       
       <section className="py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -5,8 +5,9 @@ export default function About() {
   return (
     <div className="w-full pt-20">
       <PageMeta 
-        title="About Us" 
-        description="Learn about Go Ukraina's mission, leadership, and our commitment to rebuilding Ukraine one community at a time." 
+        title="About Us"
+        description="Learn about Go Ukraina's mission, leadership, and our commitment to rebuilding Ukraine one community at a time."
+        path="/about"
       />
       <section className="py-20 lg:py-32 bg-muted/30 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">

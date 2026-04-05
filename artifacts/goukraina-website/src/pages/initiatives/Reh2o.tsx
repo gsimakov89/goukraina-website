@@ -75,6 +75,7 @@ export default function Reh2o() {
       <PageMeta
         title="ReH2O Clean Water Project"
         description="Providing solar-powered reverse osmosis water purification stations to war-damaged communities in Ukraine. Help us fund the next station."
+        path="/initiatives/reh2o"
         type="article"
       />
       <ArticleSchema

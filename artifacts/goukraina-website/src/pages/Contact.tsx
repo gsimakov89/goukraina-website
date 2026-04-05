@@ -67,6 +67,7 @@ export default function Contact() {
       <PageMeta
         title="Contact Us"
         description="Get in touch with Go Ukraina to discuss partnerships, donations, or media inquiries."
+        path="/contact"
       />
 
       <section className="py-24 bg-white">

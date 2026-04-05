@@ -75,8 +75,9 @@ export default function Home() {
   return (
     <div className="w-full">
       <PageMeta 
-        title="Home" 
-        description="Go Ukraina is a Los Angeles-based 501(c)(3) nonprofit delivering essential aid, clean water, and rebuilding infrastructure in war-affected Ukraine." 
+        title="Ukraine Humanitarian Aid & Reconstruction"
+        description="Go Ukraina is a Los Angeles-based 501(c)(3) nonprofit delivering essential aid, clean water, and rebuilding infrastructure in war-affected Ukraine."
+        path="/"
       />
 
       {/* Hero Section */}
