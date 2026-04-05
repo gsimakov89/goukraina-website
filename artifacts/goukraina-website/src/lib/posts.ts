@@ -9,6 +9,7 @@ export interface BlogPost {
   content: string;
   tags: string[];
   readTime: string;
+  image?: string;
 }
 
 const hardcodedPosts: BlogPost[] = [
@@ -20,6 +21,7 @@ const hardcodedPosts: BlogPost[] = [
     excerpt: 'The ongoing conflict has severely disrupted clean water access across Ukraine. Go Ukraina is partnering with the WASH Cluster to deploy solar-powered purification stations.',
     tags: ['water', 'ReH2O', 'WASH Cluster', 'Ukraine crisis'],
     readTime: '3 min read',
+    image: '/images/reh2o/team-station.jpg',
     content: `
       <p>The ongoing conflict in Ukraine has targeted essential civilian infrastructure, creating a severe crisis for millions of people. Among the most critical challenges is the lack of access to safe, clean drinking water.</p>
       
@@ -40,6 +42,7 @@ const hardcodedPosts: BlogPost[] = [
     excerpt: 'UN reports document systematic violations against Ukrainian prisoners and civilians in Russian detention. We must raise awareness to drive international action.',
     tags: ['humanitarian', 'human rights', 'POW', 'advocacy'],
     readTime: '3 min read',
+    image: '/images/ombudsman-meeting.jpg',
     content: `
       <p>Recent investigations by international human rights organizations have brought to light the devastating conditions faced by Ukrainian Prisoners of War and arbitrarily detained civilians.</p>
       
@@ -60,6 +63,7 @@ const hardcodedPosts: BlogPost[] = [
     excerpt: 'As a partner of the Ukraine Trade Mission, Go Ukraina and ReH2O have deployed water purification solutions to communities in Borodianka and surrounding areas.',
     tags: ['ReH2O', 'clean water', 'reconstruction', 'Borodianka'],
     readTime: '4 min read',
+    image: '/images/reh2o/crane-station.jpg',
     content: `
       <p>Borodianka, a town heavily scarred by the early days of the full-scale invasion, is taking vital steps toward recovery. A major milestone in this journey is the restoration of safe drinking water.</p>
       

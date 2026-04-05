@@ -1,5 +1,4 @@
 import PageMeta from "@/components/seo/PageMeta";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { posts } from "@/lib/posts";
 import { Link } from "wouter";
 
@@ -24,7 +23,19 @@ export default function Blog() {
             {posts.map((post) => (
               <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex flex-col h-full">
                 <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 bg-muted">
-                  <PlaceholderImage text={`Cover: ${post.title}`} className="w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                  {post.image ? (
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-[#0D1B2A] via-[#005BBB] to-[#003f88] flex items-end p-5 group-hover:scale-105 transition-transform duration-500">
+                      <span className="text-white font-display font-semibold text-lg leading-snug line-clamp-3 drop-shadow">
+                        {post.title}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {post.tags.map(tag => (
