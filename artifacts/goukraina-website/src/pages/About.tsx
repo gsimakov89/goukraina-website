@@ -1,24 +1,7 @@
-import { useRef, useEffect } from "react";
 import PageMeta from "@/components/seo/PageMeta";
 import { CheckCircle2 } from "lucide-react";
 
 export default function About() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = true;
-    const tryPlay = () => { video.play().catch(() => {}); };
-    tryPlay();
-    video.addEventListener("canplay", tryPlay);
-    video.addEventListener("loadeddata", tryPlay);
-    return () => {
-      video.removeEventListener("canplay", tryPlay);
-      video.removeEventListener("loadeddata", tryPlay);
-    };
-  }, []);
-
   return (
     <div className="w-full pt-20">
       <PageMeta 
@@ -37,7 +20,7 @@ export default function About() {
       </section>
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="max-w-3xl mx-auto">
             <div>
               <h2 className="font-display text-4xl font-bold mb-6">Who We Are</h2>
               <div className="prose prose-lg text-muted-foreground">
@@ -55,18 +38,6 @@ export default function About() {
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="rounded-3xl overflow-hidden shadow-2xl aspect-video bg-muted">
-              <video
-                ref={videoRef}
-                src="/videos/URS_2025_web.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                className="w-full h-full object-cover"
-              />
             </div>
           </div>
         </div>
