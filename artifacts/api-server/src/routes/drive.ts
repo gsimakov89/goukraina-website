@@ -98,7 +98,24 @@ function parseGoogleDocHtml(htmlContent: string, fallbackName: string, fallbackD
   const title = rawMeta["title"] || fallbackName;
   const date = rawMeta["date"] || fallbackDate;
   const author = rawMeta["author"] || "Go Ukraina";
-  const excerpt = rawMeta["excerpt"] || "";
+  const excerptFromMeta = rawMeta["excerpt"] || "";
+  const excerptFromBody = excerptFromMeta
+    ? ""
+    : bodyHtml
+        .replace(/<[^>]+>/g, " ")
+        .replace(/&nbsp;/g, " ")
+        .replace(/&#39;/g, "'")
+        .replace(/&mdash;/g, "—")
+        .replace(/&ndash;/g, "–")
+        .replace(/&amp;/g, "&")
+        .replace(/&quot;/g, '"')
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 200)
+        .replace(/\s\S*$/, "…");
+  const excerpt = excerptFromMeta || excerptFromBody;
   const tags = rawMeta["tags"]
     ? rawMeta["tags"].split(",").map((t) => t.trim()).filter(Boolean)
     : [];
