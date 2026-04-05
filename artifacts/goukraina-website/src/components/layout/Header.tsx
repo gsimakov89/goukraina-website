@@ -75,6 +75,9 @@ export default function Header() {
             <Link href="/events" className={cn("text-sm font-semibold hover:opacity-80 transition-opacity", textColorClass)}>
               Events
             </Link>
+            <Link href="/donate" className={cn("text-sm font-semibold hover:opacity-80 transition-opacity", textColorClass)}>
+              Donate
+            </Link>
           </nav>
 
           {/* Desktop CTA */}
@@ -113,6 +116,7 @@ export default function Header() {
           <Link href="/impact" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Impact</Link>
           <Link href="/blog" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Blog</Link>
           <Link href="/events" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Events</Link>
+          <Link href="/donate" className="text-lg font-semibold text-foreground py-2 border-b border-border/50">Donate</Link>
           <Link href="/contact" className="text-lg font-semibold text-foreground py-2">Contact</Link>
           <div className="pt-4 flex justify-center">
             <GivebutterButton />
