@@ -87,7 +87,7 @@ export default function About() {
                 loading="lazy"
               />
               <h3 className="font-display text-xl font-bold mb-1">German Simakovski</h3>
-              <p className="text-primary font-semibold mb-3 text-sm">Co-Chairman</p>
+              <p className="text-primary font-semibold mb-3 text-sm">President & Co-founder</p>
               <p className="text-sm text-gray-400 px-2">Spearheading strategic partnerships and operations, driving our clean water and energy infrastructure deployments.</p>
             </div>
             <div className="text-center">
