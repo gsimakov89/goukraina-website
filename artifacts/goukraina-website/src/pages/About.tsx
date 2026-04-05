@@ -121,7 +121,7 @@ export default function About() {
               />
               <h3 className="font-display text-xl font-bold mb-1">Nikol Bohach</h3>
               <p className="text-primary font-semibold mb-3 text-sm">Volunteer Coordinator</p>
-              <p className="text-sm text-gray-400 px-2">Exemplifying the spirit of service and commitment to international solidarity, coordinating GoUkrainA's volunteer operations.</p>
+              <p className="text-sm text-gray-400 px-2">Exemplifying the spirit of service and commitment to international solidarity, coordinating GoUkrainA's  operations.</p>
             </div>
           </div>
         </div>
